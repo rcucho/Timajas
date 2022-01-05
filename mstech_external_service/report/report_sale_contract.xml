@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_sale_contract_document">
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="o.with_context(lang=lang)"/>
+                <t t-set="doc" t-value="o"/>
+                <t t-if="not company">
+                    <!-- Multicompany -->
+                    <t t-if="company_id">
+                        <t t-set="company" t-value="company_id"/>
+                    </t>
+                    <t t-elif="o and 'company_id' in o">
+                        <t t-set="company" t-value="o.company_id.sudo()"/>
+                    </t>
+                    <t t-else="else">
+                        <t t-set="company" t-value="res_company"/>
+                    </t>
+                </t>
+                <div class="page" style="text-align:justify; text-justify:inter-word; margin-right:5%; margin-left:10%;" t-if="o.id">
+                    <style>
+[class*="col"] > ol {
+  padding-left: 13px;
+}
+
+[class*="col"] > ol li {
+  position: relative;
+}
+
+[class*="col"] > ol li::before {
+  content: attr(data-prefix) '.';
+  position: absolute;
+  left:-13px;
+}
+
+.especial-indent {
+  padding-left:30px;
+  text-indent:-30px;
+}
+                    </style>
+                    <t t-set="contract_client" t-value="o.partner_id"/>
+                    <div class="oe_structure"/>
+                    <div style="page-break-inside:avoid;" class="row text-center">
+                        <div class="col h5">
+                            <span>
+                                <b><u>CONTRATO Nº <t t-esc="o.id"/>-2021-JASATEC/SAE</u></b><br/>
+                                <br/><b>CONTRATO DE SERVICIO DE ARRENDAMIENTO DE EQUIPAMENTO</b><br/>
+                                Lima, <span t-esc="o.date_order.strftime('%m de %B de %Y')"/>
+                            </span>
+                            <br/>
+                        </div>
+                    </div>
+                    <div style="page-break-inside:avoid;" class="row">
+                        <div class="col">
+                            <br/>
+                            <span> Conste par el presente documento, el Contrato de Servicio de Arrendamiento de Equipamiento, que celebran de una parte la empresa
+                              <b>JASATEC PERU S.A.C.</b>, identificada con <b>RUC Nº 20547437773</b>, con domicilio fiscal en Calle Los Lirios Mz. I Lt- 2, Coop. 
+                              El Palerno, distrito de Puerte Piedra, provincia de Lima, departamento de Lima, debidamente representada por su Gerente General,
+                              JOSE JIM SOLANO GUEVARA, identificado con DNI Nº 10776859, quíen en adelante se le denominará <b>EL PROVEEDOR</b>; y por la otra parte
+                              la empresa <t t-esc="contract_client.name or ''"/>, identificada con <t t-if="contract_client.l10n_latam_identification_type_id" t-esc="contract_client.l10n_latam_identification_type_id.name + ' - '"/>
+                              <t t-esc="contract_client.vat or ''"/>, con domicilio fiscal en <t t-esc="contract_client.street or ''"/>, distrito de <t t-esc="contract_client.l10n_pe_district.name or ''"/>, 
+                              provincia de <t t-esc="contract_client.city_id.name or ''"/>, departamento de <t t-esc="contract_client.state_id.name or ''"/>, debidamente representado
+                              por su Gerente General, <b><t t-if="contract_client.child_ids" t-esc="contract_client.child_ids[0].name"/></b> identificado con <t t-if="contract_client.child_ids" t-esc="contract_client.child_ids[0].l10n_latam_identification_type_id.name + ' - '"/>
+                              <t t-if="contract_client.child_ids" t-esc="contract_client.child_ids[0].vat or ''"/> , a quien en adelante se denominara <b>EL CLIENTE</b>, en los terminos y condiciones siguientes:                                
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top:15px; page-break-inside:avoid;" class="row">
+                        <div class="col">
+                            <b>
+                              <li><u>PRIMERO:</u> OBJETO</li> 
+                            </b>
+                            <br/>
+                        </div>
+                    </div>
+                    <div style="page-break-inside:avoid;" class="row">
+                        <div class="col">
+                            <span>Mediante el presente documento <b>EL PROVEEDOR</b> entrega en arrendamiento a <b>EL CLIENTE</b> el siguiente equipamento,
+                              denominado en adelante <b>EL EQUIPO</b>:
+                            </span>
+                        </div>
+                    </div>
+                    <!--
+                    #################
+                    PRODUCTO - OBJETO
+                    #################
+                    -->
+                    <div style="page-break-inside:avoid;" class="row">
+                        <div class="col" style="margin-left:6%;">
+                          <t t-foreach="o.order_line" t-as="line">
+                            <t t-if="line.product_id.rent_ok == True">
+                              <span>
+                                  <ol style="list-style-position:inside; list-style-type:lower-alpha;">
+                                      <li><b><span t-field="line.product_id.name"/></b></li>
+                                      <span t-field="line.product_id.description"/>
+                                  </ol>
+                              </span>
+                            </t>
+                          </t>
+                        </div>
+                    </div>
+                    
+                    <div style="page-break-inside:avoid;" class="row">
+                        <div class="col">
+                            <br/>
+                            <span>
+                              La finalidad del contrato es que <b>EL CLIENTE</b> pueda usar <b>EL EQUIPO</b> en las labores normales al uso de los equipos.
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top:15px; page-break-inside:avoid;" class="row">
+                        <div class="col">
+                            <b>
+                              <li><u>SEGUNDO:</u> ESTADO DEL EQUIPO</li> 
+                            </b>
+                            <br/>
+                        </div>
+                    </div>
+                    <div style="page-break-inside:avoid;" class="row">
+                        <div class="col">
+                            <span><b>EL EQUIPO</b> se encuentran en buen estadi de funcionamiento y operatividad quedando asi plasmado en este contrato.<b>EL CLIENTE</b>
+                              es consciente de que cualquier error y/o equivocacion por parte de sus especialistas en la adquisicion del equipo, ya sea por menos potencia
+                              de lo requerido y/o incompatible a sus labores a realizar queda terminantemente a reponsabilidad del mismo asumiendo los daños y prejuicios
+                              que pueda sufrir <b>EL EQUIPO</b>.
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top:15px; page-break-inside:avoid;" class="row">
+                        <div class="col">
+                            <b>
+                              <li><u>TERCERO:</u> CONTRAPRESTACION Y/O RENTA</li> 
+                            </b>
+                            <br/>
+                        </div>
+                    </div>
+                    <div style="page-break-inside:avoid;" class="row">
+                        <div class="col">
+                            <span>Las partes han convenido fijar <b>LA RENTA</b> por arrendamiento semanal (7 dias calendario) de <b>EL EQUIPO</b> en la suma de
+                              <b> S/. + IGV</b>, dicho importe sera abonado por <b>EL CLIENTE</b> por adelantado. La falta de pago de la renta dara lugar a la accion
+                              ejecutiva de conformidad con el inciso 6º del Art. 893 del Codigo Procesal Civil,. con el solo merito del instrumento impago, sin prejuicio
+                              que <b>EL PROVEEDOR</b> pueda dar por resuelto el contrato por falta de pago de la renta pactada.
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top:15px; page-break-inside:avoid;" class="row">
+                        <div class="col">
+                            <b>
+                              <li><u>CUARTO:</u> MOVILIZACION Y DESMOVILIZACION</li> 
+                            </b>
+                            <br/>
+                        </div>
+                    </div>
+                    <div style="page-break-inside:avoid;" class="row">
+                        <div class="col">
+                            <span>La movilización, traslado y desmovilización de <b>LOS EQUIPOS</b> descritos en el objeto del contrato, desde los depósitos de 
+                              <b>EL PROVEEDDR</b> en Av. Las Lomas Mz. C Lt. 4 Carabayllo hasta las instalaciones en el punto de destino definido por <b>EL CLIENTE</b> 
+                              y viceversa, así como los seguros de dicho transporte serán íntegramente por cuenta y riesgo de <b>EL CLIENTE</b>. salvo que haya contratado también los 
+                              servicios de traslado de equipamiento, el cual deberá ser íntegramente pagado previo al despacho de <b>EL EQUIPO</b>.
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top:15px; page-break-inside:avoid;" class="row">
+                        <div class="col">
+                            <b>
+                              <li><u>QUINTO:</u> PLAZO DEL CONTRATO</li> 
+                            </b>
+                            <br/>
+                        </div>
+                    </div>
+                    <div style="page-break-inside:avoid;" class="row">
+                        <div class="col">
+                            <span>Las partes de coMún acuerdo convíenen en celebrar el contrato por un plazo mínimo de una (1) semana calendario, a partir 
+                              de la fecha de suscrito el presente contrato o estrega del eguipo según guía de remisión, pudiéndose prorrogar y/o renovar si las
+                              partes lo consideran pertinentes, suscribiendo un nuevo contrato, previo a que <b>EL CLIENTE</b> emita una orden de servicio por dicho periodo.
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top:15px; page-break-inside:avoid;" class="row">
+                        <div class="col">
+                            <b>
+                              <li><u>SEXTO:</u> OBLIGACIONES DEL CLIENTE</li> 
+                            </b>
+                            <br/>
+                        </div>
+                    </div>
+                    <div style="page-break-inside:avoid;" class="row">
+                        <div class="col">
+                            <div class="especial-indent">
+                                <span>1. Recibir <b>EL EQUIPO</b>, cuidarlo diligentemente y usarlos exclusivarnente para las aqtividades necesarias.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="page-break-inside:avoid;" class="row">
+                        <div class="col">
+                            <div class="especial-indent">
+                                <span>2. Pagar por adelantado la renta convenida, así como perrnitír que <b>EL PROVEEDDR</b> inspeccione por causa
+                                  justificada <b>EL EQUIPO</b> materia del presente contrato.
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="page-break-inside:avoid;" class="row">
+                        <div class="col">
+                            <div class="especial-indent">
+                                <span>3. No subarrendar <b>EL EQUIPO</b> ni ceder el contrato, salvo consentimiento por escrito de <b>EL PROVEEDDR</b>.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="page-break-inside:avoid;" class="row">
+                        <div class="col">
+                            <div class="especial-indent">
+                                <span>4. Velar por el cumplimiento de lm procedimientos, conservación del medio ambiente y normas de seguridad necesarios 
+                                  previniendo de esta manera daños personates y/o materiales originados por <b>EL EQUIPO</b>, asimismo impartir dichas normas
+                                  y procedimientos de operación al operador a su mando para una operación segura.
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="page-break-inside:avoid;" class="row">
+                        <div class="col">
+                            <div class="especial-indent">
+                                <span>5. Devolver <b>EL EQUIPO</b> a <b>EL PROVEEDDR</b> al vencerse el plazo del contr¿to o cuando el contrato quede resuelto en el 
+                                  estado en que lo recibió, sin más del uso ordinario. Mientras <b>EL EQUIPO</b> no llegue a los almacenes de <b>EL PROVEEDDR</b>, 
+                                  seguirá corriendo el alquiler por día
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="page-break-inside:avoid;" class="row">
+                        <div class="col">
+                            <div class="especial-indent">
+                                <span>6. En caso de ocurrir cualquier siniestro sea terremoto, vandalismo, terrorismo u gtros afines a su naturaleza y 
+                                  se vea afectado <b>EL EQUIPO</b>, será asumido por <b>EL CLIENTE</b>.
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="page-break-inside:avoid;" class="row">
+                        <div class="col">
+                            <div class="especial-indent">
+                                <span>7. Sin perjuicio de los acápites anteriores, deberá asumir el pago del valor total de <b>EL EQUIPO</b>, en caso se negare
+                                  injustificadamente a devolverlo.
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="page-break-inside:avoid;" class="row">
+                        <div class="col">
+                          <br/>
+                            <span>Y para que así conste y surta los efectos oportunos, firman los comparecíentes el presente contrats en duplicado 
+                              ejemplar, en el lugar y fecha del encabezamiento.
+                            </span>
+                          <br/>
+                          <br/>
+                          <br/>
+                          <br/>
+                          <br/>
+                          <br/>
+                          <br/>
+                          <br/>
+                        </div>
+                    </div>
+                    
+                    
+                    <div style="margin-top:15px; page-break-inside:avoid;" class="row">
+                        <div class="col-6">
+                            <span>CLIENTE:<b> <t t-esc="contract_client.name or ''"/></b></span>
+                        </div>
+                        <div class="col-6">
+                            <span>PROVEEDOR: <b>JASACTEC PERU S.A.C.</b></span>
+                        </div>
+                        
+                    </div>
+                    <div style="page-break-inside:avoid;" class="row">
+                        <div class="col-6">
+                            <span>REPRESENTANTE: <b><t t-if="contract_client.child_ids" t-esc="contract_client.child_ids[0].name or ''"/></b></span>
+                        </div>
+                        <div class="col-6">
+                            <span>REPRESENTANTE: <b>JOSE JIM SOLANO GUEVARA</b></span>
+                        </div>
+                    </div>
+                    <div style="page-break-inside:avoid;" class="row">
+                        <div class="col-6">
+                            <span><t t-if="contract_client.child_ids" t-esc="contract_client.child_ids[0].l10n_latam_identification_type_id.name + ':'"/>
+                              <b><t t-if="contract_client.child_ids" t-esc="contract_client.child_ids[0].vat or ''"/></b>
+                            </span>
+                        </div>
+                        <div class="col-6">
+                            <span>DNI: <b>10776859</b></span>
+                        </div>
+                    </div>
+                    <div style="page-break-inside:avoid;" class="row">
+                        <div class="col-6">
+                            <span>SELLO Y FIRMA:</span>
+                        </div>
+                        <div class="col-6">
+                            <span>SELLO Y FIRMA:</span>
+                        </div>
+                    </div>
+                    
+                    <table style="margin-top:30px; page-break-inside:avoid; border:none; width:100%" name="firmas">
+                        <tbody>
+                            <tr>
+                                <td style="border:none; width:5%;"/>
+                                <td style="border:none; width:40%; height:100px; max-height:100px;">
+                                    <img t-if="o.signature" t-att-src="image_data_uri(o.signature)" style="width:100%;" alt="Cliente"/>
+                                </td>
+                                <td style="border:none; width:10%;"/>
+                                <td style="border:none; width:40%; height:100px; max-height:100px;">
+                                    <!--<t t-set="doctor_signature" t-value="contract_doctor.employee_id.user_id.digital_signature or o.user_id.digital_signature"/>
+                                    <img t-if="doctor_signature" t-att-src="image_data_uri(doctor_signature)" style="width:100%;" alt="Médico"/>-->
+                                </td>
+                                <td style="border:none; width:5%;"/>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                    <div class="oe_structure"/>
+                </div>
+            </t>
+        </template>
+        
+        <template id="report_sale_contract">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="lang" t-value="user.sudo().lang"/>
+                    <t t-call="mstech_jasatec2.report_sale_contract_document" t-lang="lang"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

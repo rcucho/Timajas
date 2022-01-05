@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_saleorder_document" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//p[@id='fiscal_position_remark']" position="after">
+            <div>
+                <p t-field="doc.html_field"/>
+            </div>
+        </xpath>
+        <!--xpath expr="//table[hasclass('o_main_table')]/tbody/t[1]" position="before">
+            <t t-set="current_item_sequence" t-value="0"/>
+        </xpath-->
+    </template>
+</odoo>
