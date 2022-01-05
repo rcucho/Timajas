@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_project_task_service">
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="o.with_context(lang=lang)"/>
+                <t t-set="doc" t-value="o"/>
+                <t t-if="not company">
+                    <!-- Multicompany -->
+                    <t t-if="company_id">
+                        <t t-set="company" t-value="company_id"/>
+                    </t>
+                    <t t-elif="o and 'company_id' in o">
+                        <t t-set="company" t-value="o.company_id.sudo()"/>
+                    </t>
+                    <t t-else="else">
+                        <t t-set="company" t-value="res_company"/>
+                    </t>
+                </t>
+                <div class="col-row text-center">
+              <div class="col h5">
+                <span><b>INFORME TECNICO N°<span t-field="o.id"/>-2021-JASATEC/AST</b></span><br/>
+                <span>Cliente: <span t-field="o.cliente_task.display_name"/><br/></span><br/>
+                <span><span t-field="o.partner_type_vat"/>: <span t-field="o.partner_number_vat"/></span>
+              </div>
+            </div>
+            <div class="row col">
+              <span><br/><b><u>1. ANTECEDENTES</u></b><br/></span>
+              <span> Por requerimiento de la empresa <span t-field="o.cliente_task.display_name"/> con <span t-field="o.partner_type_vat"/> - <span t-field="o.partner_number_vat"/>
+                se le remitió la Cotización N° <span t-field="o.sale_line_id.display_name"/>, de fecha <span t-field="o.sale_order_date"/> respecto al
+                <span t-field="o.nombre_titulo"/> ubicados en la ciudad de <span t-field="o.cliente_task.display_name"/>.<br/>Luego, nos indican que aceptan nuestra cotización y que se realizará el servicio en el
+                mes de __. De inmediato nuestra empresa realizó las coordinaciones con <span t-field="o.parent_res_contact"/>, <span t-field="o.parent_contact_function"/> de <span t-field="o.cliente_task.display_name"/>
+                y se programó el servicio técnico para el día <span t-field="o.fecha_inicio"/>.
+              </span>
+            </div>
+            <div class="row col">
+              <span><br/><b><u>2. DATOS DEL SERVICIO</u><br/>2.1. Fecha y Lugar:</b><br/></span>
+                <span>El servicio de mantenimiento preventivo de <span t-field="o.nombre_titulo"/> se realizó los días <span t-field="o.fecha_inicio"/> al <span t-field="o.fecha_fin"/>
+                  ,en las instalaciones de <span t-field="o.cliente_task.display_name"/>, ubicada en <span t-field="o.partner_street"/> en la ciudad de <span t-field="o.partner_city"/>,
+                  provincia de __, departamento de <span t-field="o.partner_province"/>.
+                </span>
+            </div>
+            <div class="row col">
+              <span><br/><b>2.2. Personal tecnico:</b><br/>Para el presente servicio se asignó el personal técnico se detalla a continuación:<br/></span>
+              <table class="table table-sm o_main_table">
+                <thead>
+                    <tr>
+                        <th name="th_date" class="text-right">Fecha</th>
+                        <th name="th_employee" class="text-right">Empleado</th>
+                        <th name="th_project" class="text-right">Projecto</th>
+                        <th name="th_task" class="text-right">Tarea</th>
+                        <th name="th_description" class="text-left">Description</th>
+                        <th name="th_amount" class="text-right">Duración</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="o.timesheets_ids_ref" t-as="line">
+
+                        <tr t-att-class="'bg-200 font-weight-bold o_line_section'">
+                            <td name="td_date"><span t-field="line.date"/></td>
+                            <td name="td_employee"><span t-field="line.employee_id"/></td>
+                            <td name="td_project"><span t-field="line.project_id"/></td>
+                            <td name="td_task"><span t-field="line.task_id"/></td>
+                            <td name="td_name"><span t-field="line.name"/></td>
+                            <td name="td_amount"><span t-field="line.unit_amount"/></td>
+                        </tr>
+                    </t>
+                </tbody>
+              </table>
+            </div>
+            <div class="row col">
+              <span><br/><b>2.3. Equipamiento:</b><br/>Los equipos a los que se realizó el servicio de mantenimiento preventivo son los que se indican a continuación:<br/></span>
+              <span t-field="o.equipos_mantenimiento"/>
+            </div>
+            <div class="row col">
+              <span><br/><b>2.4. Equipos cotizados:</b><br/></span>
+              <span t-field="o.sale_line_product"/>
+            </div>
+            <div class="col row">
+              <span><br/><b><u>3. DESARROLLO DEL SERVICIO</u></b><br/>Se realizaron las siguientes actividades:<br/></span>
+            </div>
+            <div class="col row">
+              <span t-field="o.description"/>
+            </div>
+            <div class="row col">
+              <span><br/><b><u>4. REGISTRO FOTOGRAFICO</u></b><br/></span>
+            </div>
+            <span t-field="o.foto_ids"/>
+            <div class="row col">
+              <span><br/><b><u>5. CONCLUSIONES Y RECOMENDACIONES</u></b><br/></span>
+              <span t-field="o.description_conclusion"/>
+            </div>
+        </t>
+    </template>
+    <template id="report_project_task">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="lang" t-value="user.sudo().lang"/>
+                    <t t-call="mstech_jasatec2.report_project_task_service" t-lang="lang"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

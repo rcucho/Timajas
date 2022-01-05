@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="jasatec_contract" model="ir.actions.report">
+            <field name="name">Contrato</field>
+            <field name="model">sale.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">mstech_jasatec2.report_sale_contract</field>
+            <field name="report_file">mstech_jasatec2.report_sale_contract</field>
+            <field name="print_report_name">'Contrato - %s' % (object.partner_id.name)</field>
+            <field name="attachment">'Contrato - %s' % (object.partner_id.name)</field>
+            <field name="groups_id" eval="[(6, 0, [ref('sales_team.group_sale_manager')])]"/>
+            <field name="binding_model_id" ref="sale.model_sale_order"/>
+            <field name="binding_view_types">form</field>
+        </record>
+
+        <record id="jasatec_estado_arrendamiento" model="ir.actions.report">
+            <field name="name">Estado de Arrendamiento de Equipos</field>
+            <field name="model">sale.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">mstech_jasatec2.report_sale_arrendamiento</field>
+            <field name="report_file">mstech_jasatec2.report_sale_arrendamiento</field>
+            <field name="print_report_name">'Estado Arrendamiento - %s' % (object.partner_id.name)</field>
+            <field name="attachment">'Estado Arrendamiento - %s' % (object.partner_id.name)</field>
+            <field name="groups_id" eval="[(6, 0, [ref('sales_team.group_sale_manager')])]"/>
+            <field name="binding_model_id" ref="sale.model_sale_order"/>
+            <field name="binding_view_types">form</field>
+        </record>
+        
+        <record id="paperformat_hoja_horizontal" model="report.paperformat">
+            <field name="name">A4 Horizontal</field>
+            <field name="default" eval="True" />
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">10</field>
+            <field name="margin_bottom">15</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">10</field>
+            <field name="dpi">90</field>
+        </record>
+        
+        <record id="mstech_jasatec2.jasatec_estado_arrendamiento" model="ir.actions.report">
+            <field name="paperformat_id" ref="mstech_jasatec2.paperformat_hoja_horizontal" />
+        </record>
+    </data>
+</odoo>
