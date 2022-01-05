@@ -113,8 +113,8 @@ class StockPickingTask(models.Model):
         for record in self:
             if record.picking_task:
                 record.picking_type_id = (5, 'San Francisco: Internal Transfers')
-        picki = super().onchange_picking_type()
-        return picki
+        #picki = super().onchange_picking_type()
+        #return picki
     
     @api.onchange('partner_id')
     def onchange_partner_id(self):
