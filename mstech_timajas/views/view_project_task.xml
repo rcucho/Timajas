@@ -218,6 +218,7 @@
 						</div>
 					</page>
 				</xpath>
+				<!-- PESTAÑA DE INFORME TECNICO
 				<xpath expr="//notebook" position="inside">
 					<page name="report_technical" string="Informe Tecnico" attrs="{'invisible': [('is_fsm','=',False)]}">
 						<div class="col-row text-center">
@@ -247,7 +248,6 @@
 						</div>
 						<div class="row col">
 							<span><br/><b>2.2. Personal tecnico:</b><br/>Para el presente servicio se asignó el personal técnico se detalla a continuación:<br/></span>
-							<!--<field name="timesheet_ids" readonly="1"/>-->
 							<field name="timesheets_ids_ref"/>
 									 
 						</div>
@@ -290,7 +290,7 @@
 						  	</group>
 						</group>
 					</page>
-				</xpath>
+				</xpath> -->
 			</data>
 		</field>
         </record>
