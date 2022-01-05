@@ -12,7 +12,6 @@
     ],
     'data': [
         'data/project_data.xml',
-        'views/project_views.xml',
         'views/view_project_task.xml',
     ],
     'installable' : True,
