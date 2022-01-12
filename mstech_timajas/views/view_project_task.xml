@@ -21,7 +21,7 @@
 				    <attribute name="attrs">{'invisible': ['|', ('is_fsm','=',False), '|', ('allow_billable', '=', False), ('invoice_count', '=', 0)]}</attribute>
 				</xpath>
 				<xpath expr="//notebook" position="inside">
-					<page name="herramientas_transfe" string="Herramientas" attrs="{'invisible': [('is_fsm','=',False)]}">
+					<page name="herramientas_transfe" string="Herramientas">
 						<div class="text-center">
 							<div class="col h5">
 								<label for='task_picking' string="Movimiento Interno de Herramientas" style="font-weight:bold;"/>
@@ -29,7 +29,7 @@
 							</div>
 						</div>
 					</page>
-					<page name="create_orden_manu" string="Orden de Manufactura" attrs="{'invisible': [('is_fsm','=',False)]}">
+					<page name="create_orden_manu" string="Orden de Manufactura">
 					</page>
 				</xpath>
 			</data>
