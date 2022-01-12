@@ -30,7 +30,7 @@
 						</div>
 					</page>
 					<page name="create_orden_manu" string="Orden de Manufactura">
-						<field name="orden_manufa"/>
+						<field name="om_mrp"/>
 					</page>
 				</xpath>
 			</data>
