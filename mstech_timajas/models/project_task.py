@@ -8,25 +8,11 @@ class ProjectTaskTimajas(models.Model):
     create_function = fields.Char(related='create_uid.function', readonly=True)
     state_payment_invoice = fields.Selection(related='sale_order_id.invoice_ids.payment_state',string="Estado de Pago Factura" ,readonly=True)  
     #---------------------------------------------------------------------------------------------
-    sale_line_product = fields.Many2many(comodel_name='sale.order.line', relation='relation_task_product', column1='project_task_id', column2='sale_order_line_id', string ='Productos vendidos', compute='_compute_sale_line_product', readonly=True)
     task_picking = fields.One2many('stock.picking','picking_task', string="Herram.")
     equipos_mantenimiento = fields.Html(string='Equipos para Mantenimiento')
-    #---------------------------------------------------------------------------------------------
+    orden_manufac = fields.One2many('mrp.production', string="Ordenn de Manufactura")
     
-    @api.onchange('sale_line_id')
-    def _compute_sale_line_product(self):
-        for record in self:
-            if record.sale_line_id:
-                tareas = record.project_id.task_ids
-                #linea = record.sale_line_id.order_id.order_line
-                sale_task = record.sale_line_id
-                order_task = sale_task.order_id
-                linea_task = order_task.order_line
-                product_task = linea_task.filtered(lambda ele: ele.id not in tareas.sale_line_id.ids)
-                record.sale_line_product = product_task
-            else:
-                record.sale_line_product = False
-            
+    #---------------------------------------------------------------------------------------------          
 class StockPickingTask(models.Model):
     _inherit = 'stock.picking'
     
