@@ -17,10 +17,12 @@ class MrpProducction(models.Model):
     om_project = fields.Many2one('project.task', string="OM en Proyecto")
     
     @api.onchange('om_project', 'product_id')
-    def onchange_origin(self):
+    def onchange_origin_location(self):
         for record in self:
             if record.om_project:
                 record.origin = record.om_project.sale_order_id.name
+                record.location_src_id = (20, 'EW/Stock')
+                record.location_dest_id = (20, 'EW/Stock')
     
 class StockPickingTask(models.Model):
     _inherit = 'stock.picking'   
