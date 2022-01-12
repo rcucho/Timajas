@@ -16,7 +16,7 @@ class MrpProducction(models.Model):
     _inherit = "mrp.production"
     om_project = fields.Many2one('project.task', string="OM en Proyecto")
     
-@api.onchange('om_project', 'product_id')
+    @api.onchange('om_project', 'product_id')
     def onchange_origin(self):
         for record in self:
             if record.om_project:
