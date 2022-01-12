@@ -29,6 +29,8 @@
 							</div>
 						</div>
 					</page>
+					<page name="create_orden_manu" string="Orden de Manufactura" attrs="{'invisible': [('is_fsm','=',False)]}">
+					</page>
 				</xpath>
 			</data>
 		</field>
