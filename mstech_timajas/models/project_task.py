@@ -2,7 +2,7 @@ from odoo import models,fields,api,_
 from datetime import timedelta, datetime
 from odoo.exceptions import UserError
 
-class FormulariosColumnaConectada(models.Model):
+class ProjectTaskTimajas(models.Model):
     _inherit = "project.task"
     
     create_function = fields.Char(related='create_uid.function', readonly=True)
