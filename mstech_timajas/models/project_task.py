@@ -16,10 +16,16 @@ class MrpProducction(models.Model):
     _inherit = "mrp.production"
     om_project = fields.Many2one('project.task', string="OM en Proyecto")
     
-class StockPickingTask(models.Model):
-    _inherit = 'stock.picking'
+@api.onchange('om_project', 'product_id')
+    def onchange_origin(self):
+        for record in self:
+            if record.om_project:
+                record.origin = om_project.sale_id.name
     
+class StockPickingTask(models.Model):
+    _inherit = 'stock.picking'   
     picking_task = fields.Many2one('project.task', string="tarea en movimiento")
+    
     @api.model
     def create(self, vals):
         defaults = self.default_get(['name', 'picking_type_id'])
