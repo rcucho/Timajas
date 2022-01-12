@@ -10,14 +10,16 @@ class ProjectTaskTimajas(models.Model):
     #---------------------------------------------------------------------------------------------
     task_picking = fields.One2many('stock.picking','picking_task', string="Herram.")
     equipos_mantenimiento = fields.Html(string='Equipos para Mantenimiento')
-    orden_manufac = fields.One2many('mrp.production', string="Ordenn de Manufactura")
+    om_mrp = fields.One2many('mrp.production','om_project',string="Ordenn de Manufactura") 
+    #---------------------------------------------------------------------------------------------
+class MrpProducction(models.Model):
+    _inherit = "mrp.production"
+    om_project = fields.Many2one('project.task', string="OM en Proyecto")
     
-    #---------------------------------------------------------------------------------------------          
 class StockPickingTask(models.Model):
     _inherit = 'stock.picking'
     
     picking_task = fields.Many2one('project.task', string="tarea en movimiento")
-    
     @api.model
     def create(self, vals):
         defaults = self.default_get(['name', 'picking_type_id'])
