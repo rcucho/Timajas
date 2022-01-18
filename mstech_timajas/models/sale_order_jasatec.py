@@ -4,6 +4,9 @@ from odoo.exceptions import UserError
 class SaleOrderJasatec(models.Model):
     _inherit = 'sale.order'
 
+    vin_car = fields.Char(string='VIN')
+    placa_car = fields.Char(string='Placa')
+    
     def open_return(self):
         mant = super().open_return()
 
