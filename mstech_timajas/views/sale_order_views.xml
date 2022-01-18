@@ -8,7 +8,8 @@
             <field name="arch" type="xml">
             <data>
                 <xpath expr="//group[@name='order_details']" position="inside">
-                    <field name="scop_number"/>
+                    <field name="vin_car"/>
+                    <field name="placa_car"/>
                 </xpath>
             </data>
             </field>
