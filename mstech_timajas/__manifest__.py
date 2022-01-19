@@ -13,7 +13,7 @@
     'data': [
         'data/project_data.xml',
         'views/view_project_task.xml',
-        'views/sale_order_views.xml',
+        #'views/sale_order_views.xml',
     ],
     'installable' : True,
     'auto_install' :  False,
