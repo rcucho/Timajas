@@ -8,12 +8,13 @@
         'stock',
         'industry_fsm',
         'industry_fsm_sale',
+        'maintenance',
 
     ],
     'data': [
         'data/project_data.xml',
         'views/view_project_task.xml',
-        #'views/sale_order_views.xml',
+        'views/maintenance_request.xml',
     ],
     'installable' : True,
     'auto_install' :  False,
