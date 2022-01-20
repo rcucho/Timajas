@@ -5,7 +5,7 @@ from odoo.exceptions import UserError
 class MaintenanceRequestTimajas(models.Model):
     _inherit = "maintenance.request"
     
-    mant_project = fields.One2many('project.task', string="Proyecto")
+    mant_project = fields.One2many('project.task','proj_mant',string="Proyecto")
 
 class ProjectTaskTimajas(models.Model):
     _inherit = "project.task"
