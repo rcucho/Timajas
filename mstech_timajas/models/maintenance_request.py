@@ -10,4 +10,4 @@ class MaintenanceRequestTimajas(models.Model):
 class ProjectTaskTimajas(models.Model):
     _inherit = "project.task"
     
-    #project_mant = fields.
+    proj_mant = fields.Many2one('maintenance.request', string="Peticion de Mantenimiento")
