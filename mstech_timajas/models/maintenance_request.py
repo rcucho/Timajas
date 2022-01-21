@@ -7,11 +7,11 @@ class MaintenanceRequestTimajas(models.Model):
     
     mant_project = fields.Many2one('project.task', string="Proyecto")
     
-    @api.onchange('name')
+    @api.onchange('stage_id')
     def _compute_mant_project(self):
         for record in self:
             #nro = int(record.employee_id.id)
-            if record.name:
+            if record.stage_id == 2 and record.name is True:
                 record.mant_project = self.env['project.task'].create({
                     'name': record.name,
                     'user_ids' : record.user_id,
