@@ -10,18 +10,25 @@ class MaintenanceRequestTimajas(models.Model):
     @api.onchange('stage_id')
     def _compute_mant_project(self):
         for record in self:
-            #nro = int(record.employee_id.id)
             if record.stage_id.id == 2:
                 record.mant_project = self.env['project.task'].create({
                     'name': record.name,
                     'user_ids' : record.user_id,
                     'project_id' : 3,
                 })
-                #raise UserError(str(type(record.employee_id.id)))
-                #raise UserError(_("..."))
+class MaintenanceEquipment2(models.Model):
+    _inherit = "maintenance.equipment"
     
+    @api.model
+    def create(self, vals):
+        product = self.env['product.template'].create({
+            'name': record.name
+        })
+        equipment = super(MaintenanceEquipment2, self).create(vals)
+        return equipment
     
 class ProjectTaskTimajas(models.Model):
     _inherit = "project.task"
     
     proj_mant = fields.One2many('maintenance.request','mant_project',string="Peticion de Mantenimiento")
+    
