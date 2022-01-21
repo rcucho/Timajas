@@ -10,11 +10,11 @@ class MaintenanceRequestTimajas(models.Model):
     @api.onchange('name')
     def _compute_mant_project(self):
         for record in self:
-            nro = int(record.employee_id.id)
+            #nro = int(record.employee_id.id)
             if record.name:
                 record.mant_project = self.env['project.task'].create({
                     'name': record.name,
-                    'user_ids' : [nro,],
+                    'user_ids' : [record.employee_id.id,],
                     'project_id' : 3,
                 })
     
