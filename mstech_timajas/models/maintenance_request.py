@@ -24,11 +24,11 @@ class MaintenanceEquipment2(models.Model):
     
     @api.model
     def create(self, vals):
-        for record in self:
+        equipment = super(MaintenanceEquipment2, self).create(vals)
+        for record in equipment:
             eqip_product = self.env['product.product'].create({
                 'name': record.name
             })
-        equipment = super(MaintenanceEquipment2, self).create(vals)
         return equipment
 
 class ProductTemplate(models.Model):
