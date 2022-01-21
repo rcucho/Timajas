@@ -16,21 +16,23 @@ class MaintenanceRequestTimajas(models.Model):
                     'user_ids' : record.user_id,
                     'project_id' : 3,
                 })
+
 class MaintenanceEquipment2(models.Model):
     _inherit = "maintenance.equipment"
     
-    eqip_product = fields.Many2one('product.template', string="Producto")
+    eqip_product = fields.Many2one('product.product', string="Producto")
     
     @api.model
     def create(self, vals):
         for record in self:
-            eqip_product = self.env['product.template'].create({
+            eqip_product = self.env['product.product'].create({
                 'name': record.name
             })
         equipment = super(MaintenanceEquipment2, self).create(vals)
         return equipment
+
 class ProductTemplate(models.Model):
-    _inherit = "product.template"
+    _inherit = "product.product"
     
     product_eqip = fields.One2many('maintenance.equipment', 'eqip_product', string="Equipamento de Mantenimiento")
     
