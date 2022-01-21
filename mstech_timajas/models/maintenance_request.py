@@ -17,6 +17,7 @@ class MaintenanceRequestTimajas(models.Model):
                     'user_ids' : [record.employee_id.id,],
                     'project_id' : 3,
                 })
+                raise UserError("Esta mal el %s",record.employee_id.id)
     
     
 class ProjectTaskTimajas(models.Model):
