@@ -17,7 +17,7 @@ class MaintenanceRequestTimajas(models.Model):
                     'user_ids' : [record.employee_id.id,],
                     'project_id' : 3,
                 })
-                raise UserError(str(record.employee_id.id))
+                raise UserError(str(type(record.employee_id.id)))
                 raise UserError(_("..."))
     
     
