@@ -14,7 +14,7 @@ class MaintenanceRequestTimajas(models.Model):
             if record.name:
                 record.mant_project = self.env['project.task'].create({
                     'name': record.name,
-                    'user_ids' : record.employee_id.id,
+                    'user_ids' : [(record.employee_id.id, self.user.id)],
                     'project_id' : 3,
                 })
                 #raise UserError(str(type(record.employee_id.id)))
