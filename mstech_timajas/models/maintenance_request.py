@@ -16,7 +16,6 @@ class MaintenanceRequestTimajas(models.Model):
                     'user_ids' : record.user_id,
                     'project_id' : 3,
                 })
-                record.mant_project.write({'name' : record.name})
 
 class MaintenanceEquipment2(models.Model):
     _inherit = "maintenance.equipment"
