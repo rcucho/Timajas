@@ -8,7 +8,7 @@
             <field name="arch" type="xml">
             <data>
                 <xpath expr="//field[@name='maintenance_type']" position="after">
-                    <field name="mant_project"/>
+                    <field name="mant_project" readonly="1"/>
                 </xpath>
             </data>
             </field>
@@ -20,7 +20,7 @@
             <field name="arch" type="xml">
             <data>
                 <xpath expr="//field[@name='employee_id']" position="after">
-                    <field name="eqip_product"/>
+                    <field name="eqip_product" readonly="1"/>
                 </xpath>
             </data>
             </field>
