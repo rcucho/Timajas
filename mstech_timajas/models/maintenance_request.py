@@ -5,7 +5,7 @@ from odoo.exceptions import UserError
 class MaintenanceRequestTimajas(models.Model):
     _inherit = "maintenance.request"
     
-    mant_project = fields.Many2one('project.task', string="Proyecto", readonly=True)
+    mant_project = fields.Many2one('project.task', string="Proyecto")
     
     @api.onchange('stage_id')
     def _compute_mant_project(self):
@@ -20,7 +20,7 @@ class MaintenanceRequestTimajas(models.Model):
 class MaintenanceEquipment2(models.Model):
     _inherit = "maintenance.equipment"
     
-    eqip_product = fields.Many2one('product.product', string="Producto", readonly=True)
+    eqip_product = fields.Many2one('product.product', string="Producto")
     
     @api.model
     def create(self, vals):
