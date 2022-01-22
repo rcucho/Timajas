@@ -8,7 +8,7 @@
             <field name="arch" type="xml">
             <data>
                 <xpath expr="//field[@name='maintenance_type']" position="after">
-                    <field name="mant_project" attrs="{'invisible':[('stage_id.id','==','1')]}" />
+                    <field name="mant_project" attrs="{'invisible':[('stage_id.id','==',1)]}" />
                 </xpath>
             </data>
             </field>
