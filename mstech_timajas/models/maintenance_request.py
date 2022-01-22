@@ -31,11 +31,11 @@ class MaintenanceEquipment2(models.Model):
             })
         return equipment
     
-    @api.onchange('name')
+    @api.onchange('has_message')
     def _compute_equip_product(self):
         for record in self:
-            if record.name:
-               self.browse(eqip_product).write({'name': record.name})
+            if record.has_message:
+               self.write({'eqip_product': record.eqip_product})
 
 class ProductTemplate(models.Model):
     _inherit = "product.product"
