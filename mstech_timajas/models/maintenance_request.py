@@ -34,8 +34,9 @@ class MaintenanceEquipment2(models.Model):
     @api.onchange('name')
     def _compute_equip_product(self):
         for record in self:
-            if record.name != False:
-               record.write({'eqip_product': record.eqip_product})
+            if record.name:
+               #record.write({'eqip_product': record.eqip_product})
+               record.eqip_product = record.eqip_product
 
 class ProductTemplate(models.Model):
     _inherit = "product.product"
