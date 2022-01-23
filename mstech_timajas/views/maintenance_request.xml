@@ -20,7 +20,7 @@
             <field name="arch" type="xml">
             <data>
                 <xpath expr="//field[@name='employee_id']" position="after">
-                    <field name="eqip_product" attrs="{'invisible':[('create_uid','==', False)]}"/>
+                    <field name="eqip_product" attrs="{'invisible':[('name','==', False)]}"/>
                 </xpath>
             </data>
             </field>
