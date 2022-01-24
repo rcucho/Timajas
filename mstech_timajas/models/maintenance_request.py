@@ -22,8 +22,7 @@ class MaintenanceEquipment2(models.Model):
     _inherit = "maintenance.equipment"
     
     eqip_product = fields.Many2one('product.product', string="Producto")
-    repuestos_proj = fields.One2many('stock.move','move_ids_without_package', string="Repuestos Usados")
-    #reg_repuesto = fields.One2many('product')
+    #repuestos_proj = fields.One2many('stock.move','move_ids_without_package', string="Repuestos Usados")
     
     @api.model
     def create(self, vals):
