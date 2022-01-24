@@ -46,7 +46,7 @@ class ProductTemplate(models.Model):
     product_eqip = fields.One2many('maintenance.equipment', 'eqip_product', string="Equipamento de Mantenimiento")
     project_count = fields.Integer(compute='_compute_project_count', string="Project Count", store= False)
     #
-    project_pids = fields.Many2many('project.project', compute="_compute_project_ids", string='Projects')
+    project_pids = fields.Many2many('project.task', compute="_compute_project_ids", string='Projects')
     project_count2 = fields.Integer(compute='_compute_project_ids', string="Project Count")
     
     @api.depends('stock_move_ids')
