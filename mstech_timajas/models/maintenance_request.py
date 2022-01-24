@@ -61,7 +61,7 @@ class ProductTemplate(models.Model):
     @api.depends('project_eqip')
     def _compute_project_ids(self):
         for rec in self:
-            projects = rec.order_line.mapped('product_eqip.maintenance_ids.mant_project')
+            projects = rec.product_eqip.mapped('maintenance_ids.mant_project')
             #projects |= rec.order_line.mapped('project_id')
             #projects |= rec.project_id
             rec.project_pids = projects
