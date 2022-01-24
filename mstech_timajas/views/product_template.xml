@@ -3,7 +3,7 @@
     <data>
         <record id="view_product_mant_form_timajas" model="ir.ui.view">
             <field name="name">product.maintenance.form.timajas</field>
-            <field name="model">product.template</field>
+            <field name="model">product.product</field>
             <field name="inherit_id" ref="product.product_normal_form_view"/>
             <field name="arch" type="xml">
             <data>
