@@ -82,36 +82,36 @@ class ProductTemplate(models.Model):
             action['views'] = [(view_kanban_id, 'kanban'), (view_form_id, 'form')]
         return action
 
-        def action_view_task2(self):
-            self.ensure_one()
+    def action_view_task2(self):
+        self.ensure_one()
 
-            list_view_id = self.env.ref('project.view_task_tree2').id
-            form_view_id = self.env.ref('project.view_task_form2').id
+        list_view_id = self.env.ref('project.view_task_tree2').id
+        form_view_id = self.env.ref('project.view_task_form2').id
 
-            action = {'type': 'ir.actions.act_window_close'}
-            task_projects = self.project_pids.mapped('project_id')
-            if len(task_projects) == 1 and len(self.tasks_ids) > 1:  # redirect to task of the project (with kanban stage, ...)
-                action = self.with_context(active_id=task_projects.id).env['ir.actions.actions']._for_xml_id(
-                    'project.act_project_project_2_project_task_all')
-                action['domain'] = [('id', 'in', self.tasks_ids.ids)]
-                if action.get('context'):
-                    eval_context = self.env['ir.actions.actions']._get_eval_context()
-                    eval_context.update({'active_id': project_pids.id})
-                    action_context = safe_eval(action['context'], eval_context)
-                    action_context.update(eval_context)
-                    action['context'] = action_context
-            else:
-                action = self.env["ir.actions.actions"]._for_xml_id("project.action_view_task")
-                action['context'] = {}  # erase default context to avoid default filter
-                if len(self.project_pids) > 1:  # cross project kanban task
-                    action['views'] = [[False, 'kanban'], [list_view_id, 'tree'], [form_view_id, 'form'], [False, 'graph'], [False, 'calendar'], [False, 'pivot']]
-                elif len(self.project_pids) == 1:  # single task -> form view
-                    action['views'] = [(form_view_id, 'form')]
-                    action['res_id'] = self.project_pids.id
-            # filter on the task of the current SO
-            action.setdefault('context', {})
-            #action['context'].update({'search_default_sale_order_id': self.id})
-            return action
+        action = {'type': 'ir.actions.act_window_close'}
+        task_projects = self.project_pids.mapped('project_id')
+        if len(task_projects) == 1 and len(self.tasks_ids) > 1:  # redirect to task of the project (with kanban stage, ...)
+            action = self.with_context(active_id=task_projects.id).env['ir.actions.actions']._for_xml_id(
+                'project.act_project_project_2_project_task_all')
+            action['domain'] = [('id', 'in', self.tasks_ids.ids)]
+            if action.get('context'):
+                eval_context = self.env['ir.actions.actions']._get_eval_context()
+                eval_context.update({'active_id': project_pids.id})
+                action_context = safe_eval(action['context'], eval_context)
+                action_context.update(eval_context)
+                action['context'] = action_context
+        else:
+            action = self.env["ir.actions.actions"]._for_xml_id("project.action_view_task")
+            action['context'] = {}  # erase default context to avoid default filter
+            if len(self.project_pids) > 1:  # cross project kanban task
+                action['views'] = [[False, 'kanban'], [list_view_id, 'tree'], [form_view_id, 'form'], [False, 'graph'], [False, 'calendar'], [False, 'pivot']]
+            elif len(self.project_pids) == 1:  # single task -> form view
+                action['views'] = [(form_view_id, 'form')]
+                action['res_id'] = self.project_pids.id
+        # filter on the task of the current SO
+        action.setdefault('context', {})
+        #action['context'].update({'search_default_sale_order_id': self.id})
+        return action
                 
 class ProductTemplate(models.Model):
     _inherit = "product.template"
