@@ -56,6 +56,7 @@ class ProductTemplate(models.Model):
     
     #product_eqip_temp = fields.One2many('maintenance.equipment', 'eqip_product', string="Equipamento de Mantenimiento", compute='_compute_product_eqip_temp')
     product_eqip_temp = fields.One2many(string="Equipamento de Mantenimiento", related='product_variant_id.product_eqip')
+    project_count_temp = fields.Integer(string="Project Count", related='product_variant_id.project_count')
     #@api.depends('name')
     #def _compute_product_eqip_temp(self):
         #for rec in self:
