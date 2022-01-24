@@ -22,9 +22,9 @@
                 <xpath expr="//field[@name='employee_id']" position="after">
                     <field name="eqip_product" attrs="{'invisible':[('name','==', False)]}"/>
                 </xpath>
-                <xpath expr="//field[@name='maintenance_duration']" position="after">
+                <!--<xpath expr="//field[@name='maintenance_duration']" position="after">
                     <field name="repuestos_proj"/>
-                </xpath>
+                </xpath>-->
             </data>
             </field>
         </record> 
