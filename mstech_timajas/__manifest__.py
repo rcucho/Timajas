@@ -15,7 +15,7 @@
         'data/project_data.xml',
         'views/view_project_task.xml',
         'views/maintenance_request.xml',
-        'views/product_template.xml',
+        #'views/product_template.xml',
     ],
     'installable' : True,
     'auto_install' :  False,
