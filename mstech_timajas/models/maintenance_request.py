@@ -76,7 +76,7 @@ class ProductTemplate(models.Model):
             'name': _('Projects'),
             'res_model': 'project.project',
         }
-        if len(self.project_ids) == 1:
+        if len(self.project_pids) == 1:
             action.update({'views': [(view_form_id, 'form')], 'res_id': self.project_pids.id})
         else:
             action['views'] = [(view_kanban_id, 'kanban'), (view_form_id, 'form')]
