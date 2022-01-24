@@ -62,10 +62,25 @@ class ProductTemplate(models.Model):
     def _compute_project_ids(self):
         for rec in self:
             projects = rec.product_eqip.mapped('maintenance_ids.mant_project')
-            #projects |= rec.order_line.mapped('project_id')
-            #projects |= rec.project_id
             rec.project_pids = projects
             rec.project_count2 = len(projects)
+    
+    def action_view_project_ids(self):
+        self.ensure_one()
+        view_form_id = self.env.ref('project.edit_project').id
+        view_kanban_id = self.env.ref('project.view_project_kanban').id
+        action = {
+            'type': 'ir.actions.act_window',
+            'domain': [('id', 'in', self.project_pids.ids)],
+            'view_mode': 'kanban,form',
+            'name': _('Projects'),
+            'res_model': 'project.project',
+        }
+        if len(self.project_ids) == 1:
+            action.update({'views': [(view_form_id, 'form')], 'res_id': self.project_pids.id})
+        else:
+            action['views'] = [(view_kanban_id, 'kanban'), (view_form_id, 'form')]
+        return action
                 
                 
 class ProductTemplate(models.Model):
