@@ -49,8 +49,12 @@ class ProductTemplate(models.Model):
     @api.depends('stock_move_ids')
     def _compute_project_count(self):
         for record in self:
-            record.project_count = len(record.stock_move_ids.filtered(lambda x: x.picking_id.picking_task))
-    
+            conta = len(record.stock_move_ids.filtered(lambda x: x.picking_id.picking_task))
+            if conta % 2 == 0:
+                record.project_count = conta/2
+            else:
+                record.project_count = (conta + 1)/ 2
+                
 class ProductTemplate(models.Model):
     _inherit = "product.template"
     
