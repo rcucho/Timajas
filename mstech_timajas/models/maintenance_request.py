@@ -65,7 +65,7 @@ class ProductTemplate(models.Model):
             rec.project_pids = projects
             rec.project_count2 = len(projects)
     
-    def action_view_project_ids(self):
+    def action_view_project_pids(self):
         self.ensure_one()
         view_form_id = self.env.ref('project.edit_project').id
         view_kanban_id = self.env.ref('project.view_project_kanban').id
