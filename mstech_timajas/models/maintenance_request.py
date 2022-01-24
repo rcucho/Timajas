@@ -49,8 +49,18 @@ class ProductTemplate(models.Model):
     @api.depends('product_eqip.maintenance_ids')
     def _compute_maintenance_count(self):
         for record in self:
-            record.project_count = len(record.product_eqip.maintenance_ids.mant_project) '''   
+            record.project_count = len(record.product_eqip.maintenance_ids.mant_project) '''
     
+class ProductTemplate(models.Model):
+    _inherit = "product.template"
+    
+    product_eqip_temp = fields.One2many('maintenance.equipment', 'eqip_product', string="Equipamento de Mantenimiento", compute='_compute_product_eqip_temp')
+    
+    #@api.depends('name')
+    def _compute_product_eqip_temp(self):
+        for rec in self:
+            rec.product_eqip_temp = self.env['product.product'].browse(self._context['product_eqip'])
+        
 class ProjectTaskTimajas(models.Model):
     _inherit = "project.task"
     
