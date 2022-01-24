@@ -92,7 +92,7 @@ class ProductTemplate(models.Model):
         if len(task_projects) == 1 and len(self.project_pids) > 1:  # redirect to task of the project (with kanban stage, ...)
             action = self.with_context(active_id=task_projects.id).env['ir.actions.actions']._for_xml_id(
                 'project.act_project_project_2_project_task_all')
-            action['domain'] = [('id', 'in', self.tasks_ids.ids)]
+            action['domain'] = [('id', 'in', self.project_pids.ids)]
             if action.get('context'):
                 eval_context = self.env['ir.actions.actions']._get_eval_context()
                 eval_context.update({'active_id': project_pids.id})
