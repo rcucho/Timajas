@@ -21,7 +21,7 @@ class MaintenanceEquipment2(models.Model):
     _inherit = "maintenance.equipment"
     
     eqip_product = fields.Many2one('product.product', string="Producto")
-    repuestos_proj = fields.One2many('stock.picking','move_ids_without_package', string="Repuestos Usados")
+    #repuestos_proj = fields.One2many('stock.picking','move_ids_without_package', string="Repuestos Usados")
     
     @api.model
     def create(self, vals):
@@ -32,13 +32,13 @@ class MaintenanceEquipment2(models.Model):
             })
         return equipment
     
-    @api.onchange('maintenance_ids')
-    def _compute_mant_project(self):
-        for rec in self:
-            mov_pro = rec.maintenance_ids.mant_project.task_picking
-            #rec.repuestos_proj = rec.maintenance_ids.mant_project.task_picking.move_ids_without_package
-            for line in mov_pro:
-                rec.repuestos_proj = line.move_ids_without_package
+    #@api.onchange('maintenance_ids')
+    #def _compute_mant_project(self):
+        #for rec in self:
+            #mov_pro = rec.maintenance_ids.mant_project.task_picking
+            #/rec.repuestos_proj = rec.maintenance_ids.mant_project.task_picking.move_ids_without_package
+            #for line in mov_pro:
+                #rec.repuestos_proj = line.move_ids_without_package
     
 class ProductTemplate(models.Model):
     _inherit = "product.product"
