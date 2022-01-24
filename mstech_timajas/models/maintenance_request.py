@@ -58,7 +58,7 @@ class ProductTemplate(models.Model):
             else:
                 record.project_count = (conta + 1)/ 2
 
-    @api.depends('project_eqip')
+    @api.depends('product_eqip')
     def _compute_project_ids(self):
         for rec in self:
             projects = rec.product_eqip.mapped('maintenance_ids.mant_project')
