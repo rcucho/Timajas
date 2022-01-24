@@ -55,9 +55,10 @@ class ProductTemplate(models.Model):
         for record in self:
             stock = self.env['stock.move'].search([('product_id','=',record.id)])
             pick = stock.picking_id
-            move_pro = pick.mapped('move_ids_without_package')
-            quant_pro = move_pro.quantity_done
-            record.project_count = quant_pro
+            move_pro = pick.move_ids_without_package
+            for m in move_pro:
+                quant_pro = quant_pro + m.quantity_done
+                record.project_count = quant_pro
             #task = pick.picking_task
             #record.project_count = len(task)
            
