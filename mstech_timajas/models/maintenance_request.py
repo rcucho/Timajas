@@ -95,7 +95,7 @@ class ProductTemplate(models.Model):
             action['domain'] = [('id', 'in', self.project_pids.ids)]
             if action.get('context'):
                 eval_context = self.env['ir.actions.actions']._get_eval_context()
-                eval_context.update({'active_id': project_pids.id})
+                eval_context.update({'active_id': task_projects.id})
                 action_context = safe_eval(action['context'], eval_context)
                 action_context.update(eval_context)
                 action['context'] = action_context
