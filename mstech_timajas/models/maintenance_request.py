@@ -44,12 +44,12 @@ class ProductTemplate(models.Model):
     _inherit = "product.product"
     
     product_eqip = fields.One2many('maintenance.equipment', 'eqip_product', string="Equipamento de Mantenimiento")
-    '''project_count = fields.Integer(compute='_compute_project_count', string="Project Count", store=True)
+    project_count = fields.Integer(compute='_compute_project_count', string="Project Count", store=True)
     
-    @api.depends('product_eqip.maintenance_ids')
+    #@api.depends('product_eqip.maintenance_ids')
     def _compute_maintenance_count(self):
         for record in self:
-            record.project_count = len(record.product_eqip.maintenance_ids.mant_project) '''
+            record.project_count = len(record.stock_move_ids.filtered(lambda x: x.picking_id.picking_task))
     
 class ProductTemplate(models.Model):
     _inherit = "product.template"
