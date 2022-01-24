@@ -74,7 +74,7 @@ class ProductTemplate(models.Model):
             'domain': [('id', 'in', self.project_pids.ids)],
             'view_mode': 'kanban,form',
             'name': _('Projects'),
-            'res_model': 'project.project',
+            'res_model': 'project.task',
         }
         if len(self.project_pids) == 1:
             action.update({'views': [(view_form_id, 'form')], 'res_id': self.project_pids.id})
