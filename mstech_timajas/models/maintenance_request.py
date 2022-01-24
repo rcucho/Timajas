@@ -45,6 +45,9 @@ class ProductTemplate(models.Model):
     
     product_eqip = fields.One2many('maintenance.equipment', 'eqip_product', string="Equipamento de Mantenimiento")
     project_count = fields.Integer(compute='_compute_project_count', string="Project Count", store= False)
+    #
+    project_pids = fields.Many2many('project.project', compute="_compute_project_ids", string='Projects')
+    project_count2 = fields.Integer(compute='_compute_project_ids', string="Project Count")
     
     @api.depends('stock_move_ids')
     def _compute_project_count(self):
@@ -54,6 +57,16 @@ class ProductTemplate(models.Model):
                 record.project_count = conta/2
             else:
                 record.project_count = (conta + 1)/ 2
+
+    @api.depends('project_eqip')
+    def _compute_project_ids(self):
+        for rec in self:
+            projects = rec.order_line.mapped('product_eqip.maintenance_ids.mant_project')
+            #projects |= rec.order_line.mapped('project_id')
+            #projects |= rec.project_id
+            rec.project_pids = projects
+            rec.project_count2 = len(projects)
+                
                 
 class ProductTemplate(models.Model):
     _inherit = "product.template"
