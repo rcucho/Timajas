@@ -89,7 +89,7 @@ class ProductTemplate(models.Model):
 
         action = {'type': 'ir.actions.act_window_close'}
         task_projects = self.project_pids.mapped('project_id')
-        if len(task_projects) == 1 and len(self.tasks_ids) > 1:  # redirect to task of the project (with kanban stage, ...)
+        if len(task_projects) == 1 and len(self.project_pids) > 1:  # redirect to task of the project (with kanban stage, ...)
             action = self.with_context(active_id=task_projects.id).env['ir.actions.actions']._for_xml_id(
                 'project.act_project_project_2_project_task_all')
             action['domain'] = [('id', 'in', self.tasks_ids.ids)]
