@@ -84,7 +84,6 @@ class ProductTemplate(models.Model):
 
     def action_view_task2(self):
         self.ensure_one()
-
         list_view_id = self.env.ref('project.view_task_tree2').id
         form_view_id = self.env.ref('project.view_task_form2').id
 
