@@ -16,7 +16,11 @@
                         <field name="project_count2" widget="statinfo" string="Tareas"/>
                     </button>
                 </xpath>
+                <xpath expr="//field[@name='uom_po_id']" position="after">
+                    <field name="project_count" />
+                </xpath>
             </data>
+            
             </field>
         </record>
         <record id="view_product_temp_mant_form_timajas" model="ir.ui.view">
