@@ -1,4 +1,5 @@
 from odoo import models,fields,api,_
+from odoo.tools.safe_eval import safe_eval
 from datetime import timedelta, datetime
 from odoo.exceptions import UserError
 
