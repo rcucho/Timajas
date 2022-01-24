@@ -53,7 +53,7 @@ class ProductTemplate(models.Model):
     @api.depends('stock_move_ids')
     def _compute_project_count(self):
         for record in self:
-            quant_pro = 0
+            qnt_pro = 0
             stock = self.env['stock.move'].search([('product_id','=',record.id)])
             pick = stock.picking_id
             move_pro = pick.move_ids_without_package
