@@ -22,7 +22,8 @@ class MaintenanceEquipment2(models.Model):
     _inherit = "maintenance.equipment"
     
     eqip_product = fields.Many2one('product.product', string="Producto")
-    #repuestos_proj = fields.One2many('stock.picking','move_ids_without_package', string="Repuestos Usados")
+    repuestos_proj = fields.One2many('stock.move','move_ids_without_package', string="Repuestos Usados")
+    #reg_repuesto = fields.One2many('product')
     
     @api.model
     def create(self, vals):
@@ -49,15 +50,21 @@ class ProductTemplate(models.Model):
     #
     project_pids = fields.Many2many('project.task', compute="_compute_project_ids", string='Projects')
     project_count2 = fields.Integer(compute='_compute_project_ids', string="Project Count")
+    #
+    
     
     @api.depends('stock_move_ids')
     def _compute_project_count(self):
         for record in self:
-            conta = len(record.stock_move_ids.filtered(lambda x: x.picking_id.picking_task))
-            if conta % 2 == 0:
-                record.project_count = conta/2
-            else:
-                record.project_count = (conta + 1)/ 2
+            stock = self.env['stock.move'].search([('product_id','=',record.id)])
+            pick = stock.picking_id
+            task = pick.picking_task
+            record.project_count = len(task)        
+            #conta = len(record.stock_move_ids.filtered(lambda x: x.picking_id.picking_task))
+            #if conta % 2 == 0:
+                #record.project_count = conta/2
+            #else:
+                #record.project_count = (conta + 1)/ 2
 
     @api.depends('product_eqip')
     def _compute_project_ids(self):
