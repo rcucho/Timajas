@@ -35,7 +35,10 @@ class MaintenanceEquipment2(models.Model):
     @api.onchange('maintenance_ids')
     def _compute_mant_project(self):
         for rec in self:
-            rec.repuestos_proj = rec.maintenance_ids.mant_project.task_picking.move_ids_without_package
+            mov_pro = rec.maintenance_ids.mant_project.task_picking
+            #rec.repuestos_proj = rec.maintenance_ids.mant_project.task_picking.move_ids_without_package
+            for line in mov_pro:
+                rec.repuestos_proj = line.move_ids_without_package
     
 class ProductTemplate(models.Model):
     _inherit = "product.product"
