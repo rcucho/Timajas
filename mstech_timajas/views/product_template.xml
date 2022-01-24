@@ -8,9 +8,12 @@
             <field name="arch" type="xml">
             <data>
                 <xpath expr="//button[@name='action_open_product_lot']" position="after">
-                    <button type="object" name="action_view_project_pids" class="oe_stat_button" icon="fa-puzzle-piece" attrs="{'invisible': [('project_pids', '=', [] )] }" >
+                    <!-- <button type="object" name="action_view_project_pids" class="oe_stat_button" icon="fa-puzzle-piece" attrs="{'invisible': [('project_pids', '=', [] )] }" >
                         <field name="project_pids" invisible="1"/>
                         <field name="project_count2" widget="statinfo" string="Projects"/>
+                    </button> -->
+                    <button type="object" name="action_view_task2" class="oe_stat_button" icon="fa-tasks" attrs="{'invisible': [('project_count2', '=', 0)]}">
+                        <field name="project_count2" widget="statinfo" string="Tareas"/>
                     </button>
                 </xpath>
             </data>
