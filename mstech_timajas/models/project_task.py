@@ -13,7 +13,8 @@ class ProjectTaskTimajas(models.Model):
     equipos_mantenimiento = fields.Html(string='Equipos para Mantenimiento')
     om_mrp = fields.One2many('mrp.production','om_project',string="Ordenn de Manufactura")
     #--------------------------------------------------------------------------------------------------------------------------------
-    task_eqip = fields.One2many('maintenance.equipment','eqip_task', string="Tarea en equipos", compute='_compute_task_eqip')#aqui
+    #task_eqip = fields.One2many('maintenance.equipment','eqip_task', string="Tarea en equipos", compute='_compute_task_eqip')#aqui
+    task_eqip = fields.Many2one('maintenance.equipment', string="Tarea en equipos", compute='_compute_task_eqip')#aqui
     #--------------------------------------------------------------------------------------------------------------------------------
     @api.onchange('proj_mant')
     def _compute_task_eqip(self):
