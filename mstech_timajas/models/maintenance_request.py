@@ -59,14 +59,18 @@ class ProductTemplate(models.Model):
         for record in self:
             qnt_pro = 0
             #stock = self.env['stock.move'].search([('product_id','=',record.id)])
-            stock = self.env['stock.move']
+            #--stock = self.env['stock.move']
             #pick = stock.picking_id.search([('picking_task.project_id','=',record.project_pids[0].project_id.id)])
             #pick = stock.picking_id.search([('picking_task','=',record.project_pids[0])])
             #pick = stock.picking_id.search([('picking_task.task_eqip','=',record.project_pids.task_eqip)])
-            pick = stock.picking_id.search([('picking_task.task_eqip.id','=',record.product_eqip[0].id)])
-            move_pro = pick.move_ids_without_package
-            for m in move_pro:
-                qnt_pro = qnt_pro + m.quantity_done
+            #--pick = stock.picking_id.search([('picking_task.task_eqip.id','=',record.product_eqip[0].id)])
+            #--move_pro = pick.move_ids_without_package
+            proj_task = record.project_pids
+            for r in proj_task:
+                pick = r.task_picking
+                move_pro = pick.move_ids_without_package
+                for m in move_pro:
+                    qnt_pro = qnt_pro + m.quantity_done
             record.project_count = qnt_pro
             #task = pick.picking_task
             #record.project_count = len(task)
