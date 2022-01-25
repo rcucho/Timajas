@@ -9,7 +9,7 @@ class ProjectTaskTimajas(models.Model):
     state_payment_invoice = fields.Selection(related='sale_order_id.invoice_ids.payment_state',string="Estado de Pago Factura" ,readonly=True)  
     #--------------------------------------------------------------------------------------------------------------------------------
     task_picking = fields.One2many('stock.picking','picking_task', string="Herram.")
-    task_picking_id = fields.Many2one('stock.picking','Mov. unico por Tarea')
+    #task_picking_id = fields.Many2one('stock.picking','Mov. unico por Tarea')
     om_mrp = fields.One2many('mrp.production','om_project',string="Ordenn de Manufactura")
     #--------------------------------------------------------------------------------------------------------------------------------
     task_eqip = fields.Many2one('maintenance.equipment', string="Tarea en equipos", compute='_compute_task_eqip')
@@ -18,7 +18,6 @@ class ProjectTaskTimajas(models.Model):
     def _compute_task_eqip(self):
         for rec in self:
             rec.task_eqip = rec.proj_mant.equipment_id
-            #self.env['maintenance.equipment'].search()
     
 class MrpProducction(models.Model):
     _inherit = "mrp.production"
@@ -35,7 +34,7 @@ class MrpProducction(models.Model):
 class StockPickingTask(models.Model):
     _inherit = 'stock.picking'   
     picking_task = fields.Many2one('project.task', string="tarea en movimiento")
-    picking_task_ids = fields.One2many('project.task','task_picking_id', string="tarea en movimiento")
+    #picking_task_ids = fields.One2many('project.task','task_picking_id', string="tarea en movimiento")
     
     @api.model
     def create(self, vals):
@@ -58,7 +57,6 @@ class StockPickingTask(models.Model):
         for record in self:
             if record.picking_task:
                 record.partner_id = record.picking_task.partner_id
-        #parti = super().onchange_partner_id()
         parti = None
         if hasattr(super(), 'onchange_partner_id'):
             parti = super().onchange_partner_id()
@@ -68,9 +66,7 @@ class StockPickingTask(models.Model):
     def _compute_move_without_package(self):
         for record in self:
             if record.picking_task:
-                movimi = record.move_ids_without_package
-                #herra = movimi.filtered(lambda x_h: x_h.product_id.categ_id.name == 'Herramientas')
-                #record.move_ids_without_package = herra        
+                movimi = record.move_ids_without_package       
                 pass
         mov_he = super()._compute_move_without_package()
         return mov_he
