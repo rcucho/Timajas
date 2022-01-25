@@ -45,14 +45,14 @@ class ProductTemplate(models.Model):
     product_eqip = fields.One2many('maintenance.equipment', 'eqip_product', string="Equipamento de Mantenimiento")
     project_count = fields.Integer(compute='_compute_project_count', string="Project Count", store= False)
     #-------------------------------------------------------------------------------------------------------------------
-    project_pids = fields.Many2many('project.task', compute="_compute_project_ids", string='Projects')
-    project_count2 = fields.Integer(compute='_compute_project_ids', string="Project Count")
+    tasks_mant_ids = fields.Many2many('project.task', compute="_compute_tasks_ids", string='Projects')
+    task_count = fields.Integer(compute='_compute_tasks_ids', string="Project Count")
     #-------------------------------------------------------------------------------------------------------------------    
     @api.depends('stock_move_ids')
     def _compute_project_count(self):
         for record in self:
             qnt_pro = 0
-            proj_task = record.project_pids
+            proj_task = record.tasks_mant_ids
             for r in proj_task:
                 pick = r.task_picking
                 move_pro = pick.move_ids_without_package
@@ -61,25 +61,25 @@ class ProductTemplate(models.Model):
             record.project_count = qnt_pro
 
     @api.depends('product_eqip')
-    def _compute_project_ids(self):
+    def _compute_tasks_ids(self):
         for rec in self:
-            projects = rec.product_eqip.mapped('maintenance_ids.mant_project')
-            rec.project_pids = projects
-            rec.project_count2 = len(projects)
+            tasks = rec.product_eqip.mapped('maintenance_ids.mant_project')
+            rec.tasks_mant_ids = tasks
+            rec.task_count = len(tasks)
     
-    def action_view_project_pids(self):
+    def action_view_tasks_mant_ids(self):
         self.ensure_one()
         view_form_id = self.env.ref('project.edit_project').id
         view_kanban_id = self.env.ref('project.view_project_kanban').id
         action = {
             'type': 'ir.actions.act_window',
-            'domain': [('id', 'in', self.project_pids.ids)],
+            'domain': [('id', 'in', self.tasks_mant_ids.ids)],
             'view_mode': 'kanban,form',
             'name': _('Projects'),
             'res_model': 'project.task',
         }
-        if len(self.project_pids) == 1:
-            action.update({'views': [(view_form_id, 'form')], 'res_id': self.project_pids.id})
+        if len(self.tasks_mant_ids) == 1:
+            action.update({'views': [(view_form_id, 'form')], 'res_id': self.tasks_mant_ids.id})
         else:
             action['views'] = [(view_kanban_id, 'kanban'), (view_form_id, 'form')]
         return action
@@ -90,11 +90,11 @@ class ProductTemplate(models.Model):
         form_view_id = self.env.ref('project.view_task_form2').id
 
         action = {'type': 'ir.actions.act_window_close'}
-        task_projects = self.project_pids.mapped('project_id')
-        if len(task_projects) == 1 and len(self.project_pids) > 1:
+        task_projects = self.tasks_mant_ids.mapped('project_id')
+        if len(task_projects) == 1 and len(self.tasks_mant_ids) > 1:
             action = self.with_context(active_id=task_projects.id).env['ir.actions.actions']._for_xml_id(
                 'project.act_project_project_2_project_task_all')
-            action['domain'] = [('id', 'in', self.project_pids.ids)]
+            action['domain'] = [('id', 'in', self.tasks_mant_ids.ids)]
             if action.get('context'):
                 eval_context = self.env['ir.actions.actions']._get_eval_context()
                 eval_context.update({'active_id': task_projects.id})
@@ -104,11 +104,11 @@ class ProductTemplate(models.Model):
         else:
             action = self.env["ir.actions.actions"]._for_xml_id("project.action_view_task")
             action['context'] = {}
-            if len(self.project_pids) > 1:
+            if len(self.tasks_mant_ids) > 1:
                 action['views'] = [[False, 'kanban'], [list_view_id, 'tree'], [form_view_id, 'form'], [False, 'graph'], [False, 'calendar'], [False, 'pivot']]
-            elif len(self.project_pids) == 1:
+            elif len(self.tasks_mant_ids) == 1:
                 action['views'] = [(form_view_id, 'form')]
-                action['res_id'] = self.project_pids.id
+                action['res_id'] = self.tasks_mant_ids.id
         action.setdefault('context', {})
         return action
                 
