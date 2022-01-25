@@ -23,7 +23,7 @@ class MaintenanceEquipment2(models.Model):
     
     eqip_product = fields.Many2one('product.product', string="Producto")
     #-----------------------------------------------------------------------------------------
-    eqip_task = fields.Many2one('project.task', string="Equipo en Tareas")#, compute='_compute_eqip_task')
+    eqip_task = fields.Many2one('project.task', string="Equipo en Tareas", compute='_compute_eqip_task')
     #-----------------------------------------------------------------------------------------
     @api.model
     def create(self, vals):
@@ -34,10 +34,10 @@ class MaintenanceEquipment2(models.Model):
             })
         return equipment
     
-    '''@api.onchange('maintenance_ids')
+    @api.onchange('maintenance_ids')
     def _compute_eqip_task(self):
         for rec in self:
-            rec.eqip_task = rec.'''
+            rec.eqip_task = rec.maintenance_ids.mant_project
             #mov_pro = rec.maintenance_ids.mant_project.task_picking
             #rec.repuestos_proj = rec.maintenance_ids.mant_project.task_picking.move_ids_without_package
             #for line in mov_pro:
