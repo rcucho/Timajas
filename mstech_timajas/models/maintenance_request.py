@@ -62,7 +62,7 @@ class ProductTemplate(models.Model):
             stock = self.env['stock.move']
             #pick = stock.picking_id.search([('picking_task.project_id','=',record.project_pids[0].project_id.id)])
             #pick = stock.picking_id.search([('picking_task','=',record.project_pids[0])])
-            pick = stock.picking_id.search([('picking_task.task_eqip','=',record.project_pids.task_equip)])
+            pick = stock.picking_id.search([('picking_task.task_eqip','=',record.project_pids.task_eqip)])
             move_pro = pick.move_ids_without_package
             for m in move_pro:
                 qnt_pro = qnt_pro + m.quantity_done
