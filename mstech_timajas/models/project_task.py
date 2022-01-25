@@ -15,11 +15,11 @@ class ProjectTaskTimajas(models.Model):
     #--------------------------------------------------------------------------------------------------------------------------------
     task_eqip = fields.One2many('maintenance.equipment','eqip_task', string="Tarea en equipos", compute='_compute_task_eqip')#aqui
     #--------------------------------------------------------------------------------------------------------------------------------
-    @api.onchange('project_id')
+    @api.onchange('proj_mant')
     def _compute_task_eqip(self):
         for rec in self:
-            rec.task_eqip = rec.task_eqip
-            #self.env['maintenance.equipment'].search()# aqui
+            rec.task_eqip = rec.proj_mant.equipment_id
+            #self.env['maintenance.equipment'].search()
     
 class MrpProducction(models.Model):
     _inherit = "mrp.production"
