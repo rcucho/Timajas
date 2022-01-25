@@ -43,13 +43,13 @@ class ProductTemplate(models.Model):
     _inherit = "product.product"
     #-------------------------------------------------------------------------------------------------------------------
     product_eqip = fields.One2many('maintenance.equipment', 'eqip_product', string="Equipamento de Mantenimiento")
-    project_count = fields.Integer(compute='_compute_project_count', string="Project Count", store= False)
+    stock_count = fields.Integer(compute='_compute_stock_count', string="Repuestos Usados", store= False)
     #-------------------------------------------------------------------------------------------------------------------
     tasks_mant_ids = fields.Many2many('project.task', compute="_compute_tasks_ids", string='Projects')
     task_count = fields.Integer(compute='_compute_tasks_ids', string="Project Count")
     #-------------------------------------------------------------------------------------------------------------------    
     @api.depends('stock_move_ids')
-    def _compute_project_count(self):
+    def _compute_stock_count(self):
         for record in self:
             qnt_pro = 0
             proj_task = record.tasks_mant_ids
@@ -58,7 +58,7 @@ class ProductTemplate(models.Model):
                 move_pro = pick.move_ids_without_package
                 for m in move_pro:
                     qnt_pro = qnt_pro + m.quantity_done
-            record.project_count = qnt_pro
+            record.stock_count = qnt_pro
 
     @api.depends('product_eqip')
     def _compute_tasks_ids(self):
