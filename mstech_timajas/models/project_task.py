@@ -7,18 +7,19 @@ class ProjectTaskTimajas(models.Model):
     
     create_function = fields.Char(related='create_uid.function', readonly=True)
     state_payment_invoice = fields.Selection(related='sale_order_id.invoice_ids.payment_state',string="Estado de Pago Factura" ,readonly=True)  
-    #---------------------------------------------------------------------------------------------
+    #--------------------------------------------------------------------------------------------------------------------------------
     task_picking = fields.One2many('stock.picking','picking_task', string="Herram.")
     task_picking_id = fields.Many2one('stock.picking','Mov. unico por Tarea')
     equipos_mantenimiento = fields.Html(string='Equipos para Mantenimiento')
     om_mrp = fields.One2many('mrp.production','om_project',string="Ordenn de Manufactura")
-    #---------------------------------------------------------------------------------------------
+    #--------------------------------------------------------------------------------------------------------------------------------
     task_eqip = fields.One2many('maintenance.equipment','eqip_task', string="Tarea en equipos", compute='_compute_task_eqip')#aqui
-    #---------------------------------------------------------------------------------------------
+    #--------------------------------------------------------------------------------------------------------------------------------
     @api.onchange('project_id')
     def _compute_task_eqip(self):
         for rec in self:
-            rec.task_eqip = self.env['maintenance.equipment'].search()# aqui
+            rec.task_eqip = rec.task_eqip
+            #self.env['maintenance.equipment'].search()# aqui
     
 class MrpProducction(models.Model):
     _inherit = "mrp.production"
