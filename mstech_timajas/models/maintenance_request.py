@@ -26,14 +26,14 @@ class MaintenanceEquipment2(models.Model):
     #eqip_task = fields.Many2one('project.task', string="Equipo en Tareas")#, compute='_compute_eqip_task')
     eqip_task = fields.One2many('project.task','task_eqip', string="Equipo en Tareas")
     #-----------------------------------------------------------------------------------------
-    '''@api.model
+    @api.model
     def create(self, vals):
         equipment = super(MaintenanceEquipment2, self).create(vals)
         for record in equipment:
             record.eqip_product = self.env['product.product'].create({
                 'name': record.name
             })
-        return equipment'''
+        return equipment
     
     @api.onchange('maintenance_ids')
     def _compute_eqip_task(self):
