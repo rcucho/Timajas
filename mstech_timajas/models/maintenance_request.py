@@ -43,7 +43,7 @@ class ProductTemplate(models.Model):
     _inherit = "product.product"
     #-------------------------------------------------------------------------------------------------------------------
     product_eqip = fields.One2many('maintenance.equipment', 'eqip_product', string="Equipamento de Mantenimiento")
-    stock_count = fields.Integer(compute='_compute_stock_count', string="Repuestos Usados", store= False)
+    stock_count = fields.Integer(compute='_compute_stock_count', string="Repuestos Usados en Mantenimiento", store= False)
     #-------------------------------------------------------------------------------------------------------------------
     tasks_mant_ids = fields.Many2many('project.task', compute="_compute_tasks_ids", string='Projects')
     task_count = fields.Integer(compute='_compute_tasks_ids', string="Project Count")
