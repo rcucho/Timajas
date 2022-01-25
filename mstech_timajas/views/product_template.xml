@@ -12,12 +12,12 @@
                         <field name="project_pids" invisible="1"/>
                         <field name="project_count2" widget="statinfo" string="Projects"/>
                     </button> -->
-                    <button type="object" name="action_view_task2" class="oe_stat_button" icon="fa-tasks" attrs="{'invisible': [('project_count2', '=', 0)]}">
-                        <field name="project_count2" widget="statinfo" string="Tareas"/>
+                    <button type="object" name="action_view_task2" class="oe_stat_button" icon="fa-tasks" attrs="{'invisible': [('task_count', '=', 0)]}">
+                        <field name="task_count" widget="statinfo" string="Tareas"/>
                     </button>
                 </xpath>
                 <xpath expr="//field[@name='uom_po_id']" position="after">
-                    <field name="project_count" />
+                    <field name="stock_count" />
                 </xpath>
             </data>
             
