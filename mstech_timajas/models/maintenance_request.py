@@ -117,9 +117,3 @@ class ProductTemplate(models.Model):
     
     product_eqip_temp = fields.One2many(string="Equipamento de Mantenimiento", related='product_variant_id.product_eqip')
     project_count_temp = fields.Integer(string="Project Count", related='product_variant_id.project_count')
-        
-class ProjectTaskTimajas(models.Model):
-    _inherit = "project.task"
-    
-    proj_mant = fields.One2many('maintenance.request','mant_project',string="Peticion de Mantenimiento")
-    
