@@ -11,7 +11,9 @@ class ProjectTaskTimajas(models.Model):
     task_picking = fields.One2many('stock.picking','picking_task', string="Herram.")
     task_picking_id = fields.Many2one('stock.picking','Mov. unico por Tarea')
     equipos_mantenimiento = fields.Html(string='Equipos para Mantenimiento')
-    om_mrp = fields.One2many('mrp.production','om_project',string="Ordenn de Manufactura") 
+    om_mrp = fields.One2many('mrp.production','om_project',string="Ordenn de Manufactura")
+    #---------------------------------------------------------------------------------------------
+    task_eqip = fields.One2many('maintenance.equipment','eqip_task', string="Tarea en equipos")
     #---------------------------------------------------------------------------------------------
 class MrpProducction(models.Model):
     _inherit = "mrp.production"
@@ -45,8 +47,6 @@ class StockPickingTask(models.Model):
         for record in self:
             if record.picking_task:
                 record.picking_type_id = (5, 'San Francisco: Internal Transfers')
-        #picki = super().onchange_picking_type()
-        #return picki
     
     @api.onchange('partner_id')
     def onchange_partner_id(self):
