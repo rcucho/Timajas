@@ -23,7 +23,7 @@ class MaintenanceEquipment2(models.Model):
     
     eqip_product = fields.Many2one('product.product', string="Producto")
     #-----------------------------------------------------------------------------------------
-    eqip_task = fields.Many2one('project.task', compute='_compute_eqip_task', string="Equipo en Tareas")
+    eqip_task = fields.Many2one('project.task', string="Equipo en Tareas")#, compute='_compute_eqip_task')
     #-----------------------------------------------------------------------------------------
     @api.model
     def create(self, vals):
