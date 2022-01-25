@@ -10,6 +10,7 @@ class ProjectTaskTimajas(models.Model):
     #--------------------------------------------------------------------------------------------------------------------------------
     task_picking = fields.One2many('stock.picking','picking_task', string="Herram.")
     om_mrp = fields.One2many('mrp.production','om_project',string="Ordenn de Manufactura")
+    proj_mant = fields.One2many('maintenance.request','mant_project',string="Peticion de Mantenimiento")
     #--------------------------------------------------------------------------------------------------------------------------------
     task_eqip = fields.Many2one('maintenance.equipment', string="Tarea en equipos", compute='_compute_task_eqip')
     #--------------------------------------------------------------------------------------------------------------------------------
