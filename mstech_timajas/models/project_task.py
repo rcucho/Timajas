@@ -6,13 +6,13 @@ class ProjectTaskTimajas(models.Model):
     _inherit = "project.task"
     
     create_function = fields.Char(related='create_uid.function', readonly=True)
-    state_payment_invoice = fields.Selection(related='sale_order_id.invoice_ids.payment_state',string="Estado de Pago Factura" ,readonly=True)  
+    state_payment_invoice = fields.Selection(related='sale_order_id.invoice_ids.payment_state',string="Invoice Payment Status" ,readonly=True)  
     #--------------------------------------------------------------------------------------------------------------------------------
-    task_picking = fields.One2many('stock.picking','picking_task', string="Herram.")
-    om_mrp = fields.One2many('mrp.production','om_project',string="Ordenn de Manufactura")
-    proj_mant = fields.One2many('maintenance.request','mant_project',string="Peticion de Mantenimiento")
+    task_picking = fields.One2many('stock.picking','picking_task', string="Tools")
+    om_mrp = fields.One2many('mrp.production','om_project',string="Manufacturing Order")
+    proj_mant = fields.One2many('maintenance.request','mant_project',string="Maintenance Request")
     #--------------------------------------------------------------------------------------------------------------------------------
-    task_eqip = fields.Many2one('maintenance.equipment', string="Tarea en equipos", compute='_compute_task_eqip')
+    task_eqip = fields.Many2one('maintenance.equipment', string="Task in Equiment", compute='_compute_task_eqip')
     #--------------------------------------------------------------------------------------------------------------------------------
     @api.onchange('proj_mant')
     def _compute_task_eqip(self):
@@ -33,7 +33,7 @@ class MrpProducction(models.Model):
     
 class StockPickingTask(models.Model):
     _inherit = 'stock.picking'   
-    picking_task = fields.Many2one('project.task', string="tarea en movimiento")
+    picking_task = fields.Many2one('project.task', string="Task in Stock")
     
     @api.model
     def create(self, vals):
