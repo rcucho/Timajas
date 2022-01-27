@@ -6,7 +6,7 @@ from odoo.exceptions import UserError
 class MaintenanceRequestTimajas(models.Model):
     _inherit = "maintenance.request"
     #-------------------------------------------------------------------------------------------------------------------
-    mant_project = fields.Many2one('project.task', string="Proyecto")
+    mant_project = fields.Many2one('project.task', string="Project")
     #-------------------------------------------------------------------------------------------------------------------
     @api.onchange('stage_id')
     def _compute_mant_project(self):
@@ -21,9 +21,9 @@ class MaintenanceRequestTimajas(models.Model):
 class MaintenanceEquipment2(models.Model):
     _inherit = "maintenance.equipment"
     #-------------------------------------------------------------------------------------------------------------------
-    eqip_product = fields.Many2one('product.product', string="Producto")
+    eqip_product = fields.Many2one('product.product', string="Product")
     #-------------------------------------------------------------------------------------------------------------------
-    eqip_task = fields.One2many('project.task','task_eqip', string="Equipo en Tareas")
+    eqip_task = fields.One2many('project.task','task_eqip', string="Task Equipment")
     #-------------------------------------------------------------------------------------------------------------------
     @api.model
     def create(self, vals):
@@ -42,8 +42,8 @@ class MaintenanceEquipment2(models.Model):
 class ProductTemplate(models.Model):
     _inherit = "product.product"
     #-------------------------------------------------------------------------------------------------------------------
-    product_eqip = fields.One2many('maintenance.equipment', 'eqip_product', string="Equipamento de Mantenimiento")
-    stock_count = fields.Integer(compute='_compute_stock_count', string="Repuestos Usados en Mantenimiento", store= False)
+    product_eqip = fields.One2many('maintenance.equipment', 'eqip_product', string="Maintenance Equipment")
+    stock_count = fields.Integer(compute='_compute_stock_count', string="Used Spares", store= False)
     #-------------------------------------------------------------------------------------------------------------------
     tasks_mant_ids = fields.Many2many('project.task', compute="_compute_tasks_ids", string='Projects')
     task_count = fields.Integer(compute='_compute_tasks_ids', string="Project Count")
@@ -115,5 +115,5 @@ class ProductTemplate(models.Model):
 class ProductTemplate(models.Model):
     _inherit = "product.template"
     
-    product_eqip_temp = fields.One2many(string="Equipamento de Mantenimiento", related='product_variant_id.product_eqip')
+    product_eqip_temp = fields.One2many(string="Maintenance Equipment", related='product_variant_id.product_eqip')
     project_count_temp = fields.Integer(string="Task Count", related='product_variant_id.task_count')
