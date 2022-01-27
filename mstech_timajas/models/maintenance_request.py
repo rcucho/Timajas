@@ -15,7 +15,7 @@ class MaintenanceRequestTimajas(models.Model):
                 record.mant_project = self.env['project.task'].create({
                     'name': record.name,
                     'user_ids' : record.user_id,
-                    'project_id' : 3,
+                    'project_id' : 17,
                 })
 
 class MaintenanceEquipment2(models.Model):
