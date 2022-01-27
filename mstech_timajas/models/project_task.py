@@ -28,8 +28,8 @@ class MrpProducction(models.Model):
         for record in self:
             if record.om_project:
                 record.origin = record.om_project.name#+ " / " + record.om_project.sale_order_id.name
-                record.location_src_id = (20, 'EW/Stock')
-                record.location_dest_id = (20, 'EW/Stock')
+                #record.location_src_id = (20, 'EW/Stock') # Se tendria que crear los almacenes EW/Stock
+                #record.location_dest_id = (20, 'EW/Stock')
     
 class StockPickingTask(models.Model):
     _inherit = 'stock.picking'   
