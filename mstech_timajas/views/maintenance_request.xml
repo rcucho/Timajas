@@ -20,6 +20,7 @@
             <field name="arch" type="xml">
             <data>
                 <xpath expr="//field[@name='employee_id']" position="after">
+                    <field name="maintenance_open_count"/>
                     <field name="eqip_product" attrs="{'invisible':[('name','==', False)]}"/>
                 </xpath>
                 <!--<xpath expr="//field[@name='maintenance_duration']" position="after">
