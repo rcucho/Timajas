@@ -6,7 +6,7 @@ from odoo.exceptions import UserError
 class MaintenanceRequestTimajas(models.Model):
     _inherit = "maintenance.request"
     #-------------------------------------------------------------------------------------------------------------------
-    mant_project = fields.Many2one('project.task', string="Proyecto")
+    mant_project = fields.Many2one('project.task', string="Project")
     #-------------------------------------------------------------------------------------------------------------------
     @api.onchange('stage_id')
     def _compute_mant_project(self):
