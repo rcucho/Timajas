@@ -24,13 +24,13 @@
 					<page name="herramientas_transfe" string="Herramientas">
 						<div class="text-center">
 							<div class="col h5">
-								<label for='task_picking' string="Movimiento Interno de Herramientas" style="font-weight:bold;"/>
+								<label for='task_picking' string="Peticiones de Almacén" style="font-weight:bold;"/>
 								<field name="task_picking"/>
 							</div>
 						</div>
 					</page>
 					<page name="create_orden_manu" string="Orden de Manufactura">
-						<field name="om_mrp"/>
+						<field name="om_mrp" attrs="{'invisible': [('is_fsm','=',False)]}" />
 					</page>
 				</xpath>
 			</data>
