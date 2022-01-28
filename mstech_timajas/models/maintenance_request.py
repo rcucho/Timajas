@@ -16,6 +16,7 @@ class MaintenanceRequestTimajas(models.Model):
                     'name': record.name,
                     'user_ids' : record.user_id,
                     'project_id' : 3,
+                    'is_fsm' : False,
                 })
 
 class MaintenanceEquipment2(models.Model):
