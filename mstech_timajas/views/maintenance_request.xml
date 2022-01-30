@@ -25,9 +25,13 @@
                     <field name="stock_eq_cont" attrs="{'invisible':[('name','==', False)]}"/>
                     <field name="stock_eq" attrs="{'invisible':[('name','==', False)]}"/> 
                 </xpath>
-                <!--<xpath expr="//field[@name='maintenance_duration']" position="after">
-                    <field name="repuestos_proj"/>
-                </xpath>-->
+                <xpath expr="//button[@name='667']" position="after">
+                    <button name="action_picking_move_tree" class="oe_stat_button" icon="fa-arrows-v" type="object" groups="base.group_no_one"
+                        attrs="{'invisible': ['|', '&amp;', ('eqip_task.task_picking.show_operations', '=', True), '|', ('eqip_task.task_picking.is_locked', '=', True), ('eqip_task.task_picking.state', '=', 'done'), '&amp;', ('eqip_task.task_picking.state', '=', 'done'), ('eqip_task.task_picking.is_locked', '=', True)]}"
+                        context="{'picking_type_code': eqip_task.task_picking.picking_type_code, 'default_picking_id': eqip_task.task_picking.id, 'form_view_ref':'stock.view_move_form', 'address_in_id': eqip_task.task_picking.partner_id, 'default_picking_type_id': eqip_task.task_picking.picking_type_id, 'default_location_id': eqip_task.task_picking.location_id, 'default_location_dest_id': eqip_task.task_picking.location_dest_id}">
+                            <field name="stock_eq_cont" widget="statinfo" string="Mov Inventario"/>
+                    </button>
+                </xpath>
             </data>
             </field>
         </record> 
