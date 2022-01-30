@@ -54,7 +54,17 @@ class MaintenanceEquipment2(models.Model):
                 for m in move_pro:
                     qnt_mov = qnt_mov + m.quantity_done
             rec.stock_eq_cont = qnt_mov
- 
+    #=====================================================================================       
+    def action_picking_move_tree(self):
+        action = self.env["ir.actions.actions"]._for_xml_id("stock.stock_move_action")
+        action['views'] = [
+            (self.env.ref('stock.view_picking_move_tree').id, 'tree'),
+        ]
+        action['context'] = self.env.context
+        action['domain'] = [('picking_id', 'in', self.eqip_task.task_picking.ids)]
+        #action['domain'] = [('picking_id', 'in', self.ids)]
+        return action
+    #===================================================================================== 
 class ProductTemplate(models.Model):
     _inherit = "product.product"
     #-------------------------------------------------------------------------------------------------------------------
