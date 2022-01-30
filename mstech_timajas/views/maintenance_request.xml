@@ -23,6 +23,7 @@
                     <field name="maintenance_open_count"/>
                     <field name="eqip_product" attrs="{'invisible':[('name','==', False)]}"/>
                     <field name="stock_eq_cont" attrs="{'invisible':[('name','==', False)]}"/>
+                    <field name="stock_eq" attrs="{'invisible':[('name','==', False)]}"/> 
                 </xpath>
                 <!--<xpath expr="//field[@name='maintenance_duration']" position="after">
                     <field name="repuestos_proj"/>
