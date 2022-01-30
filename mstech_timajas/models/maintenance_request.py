@@ -25,6 +25,7 @@ class MaintenanceEquipment2(models.Model):
     eqip_product = fields.Many2one('product.product', string="Producto")
     #-------------------------------------------------------------------------------------------------------------------
     eqip_task = fields.One2many('project.task','task_eqip', string="Equipo en Tareas")
+    stock_eq_cont = fields.Integer(compute='_compute_stock_eq_count', string="Repuestos Usados en Mantenimiento")
     #-------------------------------------------------------------------------------------------------------------------
     @api.model
     def create(self, vals):
@@ -40,6 +41,19 @@ class MaintenanceEquipment2(models.Model):
         for rec in self:
             rec.eqip_task = rec.maintenance_ids.mant_project
     
+    @api.onchange('eqip_task')
+    def _compute_stock_eq_count(self):
+        for rec in self:
+            #rec.stock_eq_cont = rec.task_eqip.task_picking
+            qnt_mov = 0
+            proj_task = record.task_eqip
+            for r in proj_task:
+                pick = r.task_picking
+                move_pro = pick.move_ids_without_package
+                for m in move_pro:
+                    qnt_mov = qnt_mov + m.quantity_done
+            record.stock_count = qnt_mov
+ 
 class ProductTemplate(models.Model):
     _inherit = "product.product"
     #-------------------------------------------------------------------------------------------------------------------
