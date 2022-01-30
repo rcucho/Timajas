@@ -46,7 +46,7 @@ class MaintenanceEquipment2(models.Model):
         for rec in self:
             #rec.stock_eq_cont = rec.task_eqip.task_picking
             qnt_mov = 0
-            proj_task = record.task_eqip
+            proj_task = rec.task_eqip
             for r in proj_task:
                 pick = r.task_picking
                 move_pro = pick.move_ids_without_package
