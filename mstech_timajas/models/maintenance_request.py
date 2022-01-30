@@ -52,7 +52,7 @@ class MaintenanceEquipment2(models.Model):
                 move_pro = pick.move_ids_without_package
                 for m in move_pro:
                     qnt_mov = qnt_mov + m.quantity_done
-            record.stock_eq_cont = qnt_mov
+            rec.stock_eq_cont = qnt_mov
  
 class ProductTemplate(models.Model):
     _inherit = "product.product"
