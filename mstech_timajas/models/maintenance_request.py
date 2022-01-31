@@ -25,7 +25,8 @@ class MaintenanceEquipment2(models.Model):
     eqip_product = fields.Many2one('product.product', string="Producto")
     #-------------------------------------------------------------------------------------------------------------------
     eqip_task = fields.One2many('project.task','task_eqip', string="Equipo en Tareas")
-    stock_eq_cont = fields.Integer(compute='_compute_stock_eq_count', string="Inventario C")
+    task_count = fields.Integer(compute='_compute_eqip_task', string="Project Count")
+    stock_eq_cont = fields.Integer(compute='_compute_eqip_task', string="Inventario C")
     stock_eq = fields.One2many(string="Mov de Repuestos", related='eqip_task.task_picking.move_ids_without_package')
     #-------------------------------------------------------------------------------------------------------------------
     @api.model
@@ -40,7 +41,9 @@ class MaintenanceEquipment2(models.Model):
     @api.onchange('maintenance_ids')
     def _compute_eqip_task(self):
         for rec in self:
-            rec.eqip_task = rec.maintenance_ids.mant_project
+            tasks = rec.maintenance_ids.mant_project
+            rec.eqip_task = tasks
+            rec.task_count = len(tasks)
     
     @api.onchange('eqip_task')
     def _compute_stock_eq_count(self):
@@ -54,6 +57,34 @@ class MaintenanceEquipment2(models.Model):
                 for m in move_pro:
                     qnt_mov = qnt_mov + m.quantity_done
             rec.stock_eq_cont = qnt_mov
+        #------------------------------------------------------------------------------------------
+        def action_view_task3(self):
+        self.ensure_one()
+        list_view_id = self.env.ref('project.view_task_tree2').id
+        form_view_id = self.env.ref('project.view_task_form2').id
+
+        action = {'type': 'ir.actions.act_window_close'}
+        task_projects = self.eqip_task.mapped('project_id')
+        if len(task_projects) == 1 and len(self.eqip_task) > 1:
+            action = self.with_context(active_id=task_projects.id).env['ir.actions.actions']._for_xml_id(
+                'project.act_project_project_2_project_task_all')
+            action['domain'] = [('id', 'in', self.eqip_task.ids)]
+            if action.get('context'):
+                eval_context = self.env['ir.actions.actions']._get_eval_context()
+                eval_context.update({'active_id': task_projects.id})
+                action_context = safe_eval(action['context'], eval_context)
+                action_context.update(eval_context)
+                action['context'] = action_context
+        else:
+            action = self.env["ir.actions.actions"]._for_xml_id("project.action_view_task")
+            action['context'] = {}
+            if len(self.eqip_task) > 1:
+                action['views'] = [[False, 'kanban'], [list_view_id, 'tree'], [form_view_id, 'form'], [False, 'graph'], [False, 'calendar'], [False, 'pivot']]
+            elif len(self.eqip_task) == 1:
+                action['views'] = [(form_view_id, 'form')]
+                action['res_id'] = self.eqip_task.id
+        action.setdefault('context', {})
+        return action
     #=====================================================================================       
     def action_picking_move_tree2(self):
         self.ensure_one()
