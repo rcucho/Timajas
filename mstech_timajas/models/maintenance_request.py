@@ -63,8 +63,8 @@ class MaintenanceEquipment2(models.Model):
             rec.stock_eq_cont = qnt_mov
     
     #@api.depends('eqip_product')
-    @api.depends('serial_no')
-    #@api.onchange('serial_no')
+    #@api.depends('serial_no')
+    @api.onchange('serial_no')
     def _compute_mant_lote(self):
         for rec in self:
             #if rec.eqip_product:
