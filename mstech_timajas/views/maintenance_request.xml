@@ -27,7 +27,6 @@
                 </xpath>
                 <xpath expr="//button[@name='667']" position="after">
                     <button name="action_picking_move_tree" class="oe_stat_button" icon="fa-arrows-v" type="object" groups="base.group_no_one"
-                        attrs="{'invisible': ['|', '&amp;', ('show_operations', '=', True), '|', ('is_locked', '=', True), ('state', '=', 'done'), '&amp;', ('state', '=', 'done'), ('is_locked', '=', True)]}"
                         context="{'picking_type_code': eqip_task.task_picking.picking_type_code, 'default_picking_id': eqip_task.task_picking.id, 'form_view_ref':'stock.view_move_form', 'address_in_id': eqip_task.task_picking.partner_id, 'default_picking_type_id': eqip_task.task_picking.picking_type_id, 'default_location_id': eqip_task.task_picking.location_id, 'default_location_dest_id': eqip_task.task_picking.location_dest_id}">
                             <field name="stock_eq_cont" widget="statinfo" string="Mov Inventario"/>
                     </button>
