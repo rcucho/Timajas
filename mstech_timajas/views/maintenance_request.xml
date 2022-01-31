@@ -33,6 +33,9 @@
                         <field name="stock_eq_cont" widget="statinfo" string="Inventario"/>
                     </button>
                 </xpath>
+                <xpath expr="//field[@name='warranty_date']" position="after">
+                    <field name="mant_lote" attrs="{'invisible':[('name','==', False)]}"/>
+                </xpath>
             </data>
             </field>
         </record> 
