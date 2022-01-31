@@ -68,7 +68,7 @@ class MaintenanceEquipment2(models.Model):
     def _compute_mant_lote(self):
         for rec in self:
             #if rec.eqip_product:
-            if rec.serial_no:
+            if rec.serial_no != False:
                 rec.mant_lote = self.env['stock.production.lot'].create({
                     'name': rec.serial_no,
                     'company_id' : rec.company_id.id,
