@@ -63,7 +63,8 @@ class MaintenanceEquipment2(models.Model):
         action['domain'] = [('picking_id', 'in', self.eqip_task.task_picking.ids)]
         #-----------------------------------------------------------------
         eval_context = self.env['ir.actions.actions']._get_eval_context()
-        eval_context.update({'active_id': self.eqip_task.task_picking.move_ids_without_package.id})
+        #eval_context.update({'active_id': self.eqip_task.task_picking.move_ids_without_package.id})
+        eval_context.update({'active_id': self.eqip_task.task_picking.id})
         action_context = safe_eval(action['context'], eval_context)
         action_context.update(eval_context)
         action['context'] = action_context
