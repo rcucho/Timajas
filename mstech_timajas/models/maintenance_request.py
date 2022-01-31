@@ -33,7 +33,8 @@ class MaintenanceEquipment2(models.Model):
     #-------------------------------------------------------------------------------------------------------------------
     @api.model
     def create(self, vals):
-        equipment = super(MaintenanceEquipment2, self).create(vals)
+        #equipment = super(MaintenanceEquipment2, self).create(vals)
+        equipment = super().create(vals)
         for record in equipment:
             record.eqip_product = self.env['product.product'].create({
                 'name': record.name,
