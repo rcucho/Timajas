@@ -36,7 +36,9 @@ class MaintenanceEquipment2(models.Model):
         equipment = super(MaintenanceEquipment2, self).create(vals)
         for record in equipment:
             record.eqip_product = self.env['product.product'].create({
-                'name': record.name
+                'name': record.name,
+                'detailed_type' : 'product',
+                'tracking' : 'serial',
             })
         return equipment
     
