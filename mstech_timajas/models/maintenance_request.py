@@ -66,24 +66,17 @@ class MaintenanceEquipment2(models.Model):
     @api.depends('serial_no')
     #@api.onchange('serial_no')
     def _compute_mant_lote(self):
+        self.ensure_one()
         for rec in self:
-            #if rec.eqip_product:
-            if not rec.serial_no:
-                rec.mant_lote = False
-            else:
-                rec.mant_lote = self.env['stock.production.lot'].create({
-                    'name': rec.serial_no,
-                    'company_id' : rec.company_id.id,
-                    'product_id' : rec.eqip_product.id,
-                })             
-            '''if rec.serial_no != False:
+            #if rec.eqip_product:            
+            if rec.serial_no:
                 rec.mant_lote = self.env['stock.production.lot'].create({
                     'name': rec.serial_no,
                     'company_id' : rec.company_id.id,
                     'product_id' : rec.eqip_product.id,
                 })
             else:
-                rec.mant_lote = False'''
+                rec.mant_lote = False
     #------------------------------------------------------------------------------------------
     def action_view_task3(self):
         self.ensure_one()
