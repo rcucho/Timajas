@@ -29,7 +29,7 @@ class MaintenanceEquipment2(models.Model):
     stock_eq_cont = fields.Integer(compute='_compute_stock_eq_count', string="Inventario C")
     stock_eq = fields.One2many(string="Mov de Repuestos", related='eqip_task.task_picking.move_ids_without_package')
     #-------------------------------------------------------------------------------------------------------------------
-    mant_lote =fields.Many2one('stock.production.lot',compute='_compute_mant_lote' ,string="Producto/Lote")
+    mant_lote =fields.Many2one('stock.production.lot',compute='_compute_mant_lote' ,string="Producto/Lote", store=False)
     #-------------------------------------------------------------------------------------------------------------------
     @api.model
     def create(self, vals):
