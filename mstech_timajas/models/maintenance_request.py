@@ -25,7 +25,7 @@ class MaintenanceEquipment2(models.Model):
     eqip_product = fields.Many2one('product.product', string="Producto")
     #-------------------------------------------------------------------------------------------------------------------
     eqip_task = fields.One2many('project.task','task_eqip', string="Equipo en Tareas")
-    stock_eq_cont = fields.Integer(compute='_compute_stock_eq_count', string="Repuestos Usados en Mantenimiento")
+    stock_eq_cont = fields.Integer(compute='_compute_stock_eq_count', string="Inventario C")
     stock_eq = fields.One2many(string="Mov de Repuestos", related='eqip_task.task_picking.move_ids_without_package')
     #-------------------------------------------------------------------------------------------------------------------
     @api.model
