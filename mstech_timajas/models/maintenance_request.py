@@ -56,12 +56,19 @@ class MaintenanceEquipment2(models.Model):
             rec.stock_eq_cont = qnt_mov
     #=====================================================================================       
     def action_picking_move_tree(self):
+        self.ensure_one()
         action = self.env["ir.actions.actions"]._for_xml_id("stock.stock_move_action")
-        action['views'] = [
-            (self.env.ref('stock.view_picking_move_tree').id, 'tree'),
-        ]
-        action['context'] = self.env.context
+        action['views'] = [(self.env.ref('stock.view_picking_move_tree').id, 'tree'),]
+        #action['context'] = self.env.context <----
         action['domain'] = [('picking_id', 'in', self.eqip_task.task_picking.ids)]
+        #-----------------------------------------------------------------
+        eval_context = self.env['ir.actions.actions']._get_eval_context()
+        eval_context.update({'active_id': self.eqip_task.task_picking.move_ids_without_package.id})
+        action_context = safe_eval(action['context'], eval_context)
+        action_context.update(eval_context)
+        action['context'] = action_context
+        action.setdefault('context', {})
+        #------------------------------------------------------------------        
         #action['domain'] = [('picking_id', 'in', self.ids)]
         return action
     #===================================================================================== 
