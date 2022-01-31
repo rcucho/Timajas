@@ -26,7 +26,7 @@
                     <field name="stock_eq" attrs="{'invisible':[('name','==', False)]}"/> 
                 </xpath>
                 <xpath expr="//button[@name='667']" position="after">
-                    <button name="action_picking_move_tree" class="oe_stat_button" icon="fa-arrows-v" type="object" groups="base.group_no_one">
+                    <button name="action_picking_move_tree" class="oe_stat_button" icon="fa-arrows-v" type="object">
                         <field name="stock_eq_cont" widget="statinfo" string="Inventario"/>
                     </button>
                 </xpath>
