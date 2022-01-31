@@ -70,6 +70,7 @@ class MaintenanceEquipment2(models.Model):
                 if rec.serial_no:
                     rec.mant_lote = self.env['stock.production.lot'].create({
                         'name': rec.serial_no,
+                        'company_id' : rec.company_id,
                         'product_id' : rec.eqip_product.id,
                     })
                 
