@@ -57,33 +57,33 @@ class MaintenanceEquipment2(models.Model):
                     qnt_mov = qnt_mov + m.quantity_done
             rec.stock_eq_cont = qnt_mov
         #------------------------------------------------------------------------------------------
-        def action_view_task3(self):
-            self.ensure_one()
-            list_view_id = self.env.ref('project.view_task_tree2').id
-            form_view_id = self.env.ref('project.view_task_form2').id
+    def action_view_task3(self):
+        self.ensure_one()
+        list_view_id = self.env.ref('project.view_task_tree2').id
+        form_view_id = self.env.ref('project.view_task_form2').id
 
-            action = {'type': 'ir.actions.act_window_close'}
-            task_projects = self.eqip_task.mapped('project_id')
-            if len(task_projects) == 1 and len(self.eqip_task) > 1:
-                action = self.with_context(active_id=task_projects.id).env['ir.actions.actions']._for_xml_id(
-                    'project.act_project_project_2_project_task_all')
-                action['domain'] = [('id', 'in', self.eqip_task.ids)]
-                if action.get('context'):
-                    eval_context = self.env['ir.actions.actions']._get_eval_context()
-                    eval_context.update({'active_id': task_projects.id})
-                    action_context = safe_eval(action['context'], eval_context)
-                    action_context.update(eval_context)
-                    action['context'] = action_context
-            else:
-                action = self.env["ir.actions.actions"]._for_xml_id("project.action_view_task")
-                action['context'] = {}
-                if len(self.eqip_task) > 1:
-                    action['views'] = [[False, 'kanban'], [list_view_id, 'tree'], [form_view_id, 'form'], [False, 'graph'], [False, 'calendar'], [False, 'pivot']]
-                elif len(self.eqip_task) == 1:
-                    action['views'] = [(form_view_id, 'form')]
-                    action['res_id'] = self.eqip_task.id
-            action.setdefault('context', {})
-            return action
+        action = {'type': 'ir.actions.act_window_close'}
+        task_projects = self.eqip_task.mapped('project_id')
+        if len(task_projects) == 1 and len(self.eqip_task) > 1:
+            action = self.with_context(active_id=task_projects.id).env['ir.actions.actions']._for_xml_id(
+                'project.act_project_project_2_project_task_all')
+            action['domain'] = [('id', 'in', self.eqip_task.ids)]
+            if action.get('context'):
+                eval_context = self.env['ir.actions.actions']._get_eval_context()
+                eval_context.update({'active_id': task_projects.id})
+                action_context = safe_eval(action['context'], eval_context)
+                action_context.update(eval_context)
+                action['context'] = action_context
+        else:
+            action = self.env["ir.actions.actions"]._for_xml_id("project.action_view_task")
+            action['context'] = {}
+            if len(self.eqip_task) > 1:
+                action['views'] = [[False, 'kanban'], [list_view_id, 'tree'], [form_view_id, 'form'], [False, 'graph'], [False, 'calendar'], [False, 'pivot']]
+            elif len(self.eqip_task) == 1:
+                action['views'] = [(form_view_id, 'form')]
+                action['res_id'] = self.eqip_task.id
+        action.setdefault('context', {})
+        return action
     #=====================================================================================       
     def action_picking_move_tree2(self):
         self.ensure_one()
