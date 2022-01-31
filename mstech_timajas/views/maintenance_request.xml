@@ -23,7 +23,6 @@
                     <field name="maintenance_open_count"/>
                     <field name="eqip_product" attrs="{'invisible':[('name','==', False)]}"/>
                     <field name="stock_eq_cont" attrs="{'invisible':[('name','==', False)]}"/>
-                    <field name="stock_eq" attrs="{'invisible':[('name','==', False)]}"/> 
                 </xpath>
                 <xpath expr="//button[@name='667']" position="after">
                     <button type="object" name="action_view_task3" class="oe_stat_button" icon="fa-tasks" attrs="{'invisible': [('task_count', '=', 0)]}">
