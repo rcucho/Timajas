@@ -62,10 +62,10 @@ class MaintenanceEquipment2(models.Model):
     @api.onchange('serial_no')
     def _compute_eqip_task(self):
         for rec in self:
-            if eqip_product:
-                record.mant_lote = self.env['stock.production.lot'].create({
-                    'name': record.serial_no,
-                    'product_id' : record.eqip_product,
+            if rec.eqip_product:
+                rec.mant_lote = self.env['stock.production.lot'].create({
+                    'name': rec.serial_no,
+                    'product_id' : rec.eqip_product,
                 })
                 
     #------------------------------------------------------------------------------------------
