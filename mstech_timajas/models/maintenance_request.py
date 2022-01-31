@@ -29,6 +29,8 @@ class MaintenanceEquipment2(models.Model):
     stock_eq_cont = fields.Integer(compute='_compute_stock_eq_count', string="Inventario C")
     stock_eq = fields.One2many(string="Mov de Repuestos", related='eqip_task.task_picking.move_ids_without_package')
     #-------------------------------------------------------------------------------------------------------------------
+    mant_lote =fields.Many2one('stock.production.lot', string="Producto/Lote")
+    #-------------------------------------------------------------------------------------------------------------------
     @api.model
     def create(self, vals):
         equipment = super(MaintenanceEquipment2, self).create(vals)
@@ -56,7 +58,17 @@ class MaintenanceEquipment2(models.Model):
                 for m in move_pro:
                     qnt_mov = qnt_mov + m.quantity_done
             rec.stock_eq_cont = qnt_mov
-        #------------------------------------------------------------------------------------------
+    
+    @api.onchange('serial_no')
+    def _compute_eqip_task(self):
+        for rec in self:
+            if eqip_product:
+                record.mant_lote = self.env['stock.production.lot'].create({
+                    'name': record.serial_no,
+                    'product_id' : record.eqip_product,
+                })
+                
+    #------------------------------------------------------------------------------------------
     def action_view_task3(self):
         self.ensure_one()
         list_view_id = self.env.ref('project.view_task_tree2').id
@@ -171,3 +183,7 @@ class ProductTemplate(models.Model):
     
     product_eqip_temp = fields.One2many(string="Equipamento de Mantenimiento", related='product_variant_id.product_eqip')
     project_count_temp = fields.Integer(string="Task Count", related='product_variant_id.task_count')
+    
+class MaintenanceEquipment2(models.Model):
+    _inherit = "stock.production.lot"
+    lote_mant = fields.One2many('maintenance.equipment','mant_lote',string="Lote de Equipo")
