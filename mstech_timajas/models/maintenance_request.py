@@ -66,13 +66,13 @@ class MaintenanceEquipment2(models.Model):
     #@api.depends('serial_no')
     def _compute_mant_lote(self):
         for rec in self:
-            if rec.eqip_product:
-                if rec.serial_no:
-                    rec.mant_lote = self.env['stock.production.lot'].create({
-                        'name': rec.serial_no,
-                        'company_id' : rec.company_id.id,
-                        'product_id' : rec.eqip_product.id,
-                    })
+            #if rec.eqip_product:
+            if rec.serial_no:
+                rec.mant_lote = self.env['stock.production.lot'].create({
+                    'name': rec.serial_no,
+                    'company_id' : rec.company_id.id,
+                    'product_id' : rec.eqip_product.id,
+                })
                 
     #------------------------------------------------------------------------------------------
     def action_view_task3(self):
