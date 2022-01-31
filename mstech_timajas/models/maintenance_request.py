@@ -48,7 +48,6 @@ class MaintenanceEquipment2(models.Model):
     @api.onchange('eqip_task')
     def _compute_stock_eq_count(self):
         for rec in self:
-            #rec.stock_eq_cont = rec.task_eqip.task_picking
             qnt_mov = 0
             proj_task = rec.eqip_task
             for r in proj_task:
