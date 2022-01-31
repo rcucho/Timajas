@@ -21,7 +21,7 @@
             <data>
                 <xpath expr="//field[@name='employee_id']" position="after">
                     <field name="maintenance_open_count"/>
-                    <field name="eqip_product" attrs="{'invisible':[('name','=', False)]}"/>
+                    <field name="eqip_product" attrs="{'invisible':[('id','=', False)]}"/>
                     <field name="stock_eq_cont" attrs="{'invisible':[('id','=', False)]}"/>
                 </xpath>
                 <xpath expr="//button[@name='667']" position="after">
@@ -33,7 +33,7 @@
                     </button>
                 </xpath>
                 <xpath expr="//field[@name='warranty_date']" position="after">
-                    <field name="mant_lote" attrs="{'invisible':[('name','==', False)]}"/>
+                    <field name="mant_lote" attrs="{'invisible':[('id','=', False)]}"/>
                 </xpath>
             </data>
             </field>
