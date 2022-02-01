@@ -33,18 +33,24 @@ class MaintenanceEquipment2(models.Model):
     @api.model
     def create(self, vals):
         equipment = super().create(vals)
+        list_name = self.env['product.product'].search([]).mapped('name')#---        
         for record in equipment:
-            record.eqip_product = self.env['product.product'].create({
-                'name': record.name,
-                'detailed_type' : 'product',
-                'tracking' : 'serial',
-            })
-            if record.serial_no and not record.mant_lote:
-                record.mant_lote = self.env['stock.production.lot'].create({
-                    'name': record.serial_no,
-                    'company_id' : record.company_id.id,
-                    'product_id' : record.eqip_product.id,
+            lst_word = record.name.split(' ')#---
+            if lst_word[0] in list_name:#---
+                record.eqip_product = self.env['product.product'].search([('name','=',lst_word[0])])
+            else:
+                record.eqip_product = self.env['product.product'].create({
+                    'name': record.name,
+                    'detailed_type' : 'product',
+                    'tracking' : 'serial',
                 })
+                
+                if record.serial_no and not record.mant_lote:
+                    record.mant_lote = self.env['stock.production.lot'].create({
+                        'name': record.serial_no,
+                        'company_id' : record.company_id.id,
+                        'product_id' : record.eqip_product.id,
+                    })
         return equipment
     
     def write(self, vals):
