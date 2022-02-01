@@ -28,8 +28,19 @@
                     <button type="object" name="action_view_task3" class="oe_stat_button" icon="fa-tasks" attrs="{'invisible': [('task_count', '=', 0)]}">
                         <field name="task_count" widget="statinfo" string="Tareas"/>
                     </button>
-                    <button name="action_picking_move_tree2" class="oe_stat_button" icon="fa-exchange" type="object" context="{'create': False, 'edit': False, 'delete': False}">
+                    <!--<button name="action_picking_move_tree2" class="oe_stat_button" icon="fa-exchange" type="object" context="{'create': False, 'edit': False, 'delete': False}">
                         <field name="stock_eq_cont" widget="statinfo" string="Inventario"/>
+                    </button>-->
+                    <button type="object"
+                            name= "action_view_stock_move_lines2"
+                            class="oe_stat_button" icon="fa-exchange"
+                            groups="stock.group_stock_user">
+                            <div class="o_field_widget o_stat_info mr4">
+                                <span class="o_stat_text">Repuestos:</span>
+                            </div>
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_value"><field name="stock_eq_cont"/></span>
+                            </div>
                     </button>
                 </xpath>
                 <xpath expr="//field[@name='warranty_date']" position="after">
