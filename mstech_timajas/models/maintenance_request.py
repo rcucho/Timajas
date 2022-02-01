@@ -34,7 +34,7 @@ class MaintenanceEquipment2(models.Model):
     def create(self, vals):
         equipment = super().create(vals)
         list_name = self.env['product.product'].search([]).mapped('name')
-        list_name1 = list_name.lower()
+        list_name1 = [x.lower() for x in list_name]
         for record in equipment:
             lst_word = record.name.split(' ').lower()
             if lst_word[0] in list_name1:
