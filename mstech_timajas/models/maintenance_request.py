@@ -34,12 +34,12 @@ class MaintenanceEquipment2(models.Model):
     def create(self, vals):
         equipment = super().create(vals)
         list_name = self.env['product.product'].search([]).mapped('name')
-        list_name1 = [x.lower() for x in list_name]
+        #list_name1 = [x.lower() for x in list_name]
         for record in equipment:
             lst_word = record.name.split(' ')
-            lst_word1 = [x.lower() for x in lst_word]
-            if lst_word1[0] in list_name1:
-                record.eqip_product = self.env['product.product'].search([('name','=',lst_word1[0])])
+            #lst_word1 = [x.lower() for x in lst_word]
+            if lst_word[0] in list_name:
+                record.eqip_product = self.env['product.product'].search([('name','=',lst_word[0])])
             else:
                 record.eqip_product = self.env['product.product'].create({
                     'name': record.name,
