@@ -41,6 +41,12 @@ class MaintenanceEquipment2(models.Model):
                 'detailed_type' : 'product',
                 'tracking' : 'serial',
             })
+            if record.serial_no and not record.mant_lote:
+                record.mant_lote = self.env['stock.production.lot'].create({
+                    'name': rec.serial_no,
+                    'company_id' : rec.company_id.id,
+                    'product_id' : rec.eqip_product.id,
+                })
         return equipment
     
     @api.onchange('maintenance_ids')
@@ -62,7 +68,7 @@ class MaintenanceEquipment2(models.Model):
                     qnt_mov = qnt_mov + m.quantity_done
             rec.stock_eq_cont = qnt_mov
     
-    @api.depends('serial_no')
+    '''@api.depends('serial_no')
     def _compute_mant_lote(self):
         for rec in self:           
             #if rec.serial_no:
@@ -75,10 +81,10 @@ class MaintenanceEquipment2(models.Model):
                         'product_id' : rec.eqip_product.id,
                     })
                     rec.mant_lote = lote.id
-                else:
-                    rec.mant_lote = rec.mant_lote[0]
+                #else:
+                    #rec.mant_lote = rec.mant_lote[0]
             #else:
-                #rec.mant_lote = False
+                #rec.mant_lote = False'''
     #------------------------------------------------------------------------------------------
     def action_view_task3(self):
         self.ensure_one()
