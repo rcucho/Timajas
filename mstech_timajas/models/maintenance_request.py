@@ -69,9 +69,12 @@ class MaintenanceEquipment2(models.Model):
     @api.onchange('maintenance_ids')
     def _compute_eqip_task(self):
         for rec in self:
+            #taks2 = env['project.task'].task_eqip.search([('name','=',rec.name)])
+            task3 = env['project.task'].task_picking.move_ids_without_package.search([('product_id.name','=',rec.name)])
+            #
             tasks = rec.maintenance_ids.mant_project
             rec.eqip_task = tasks
-            rec.task_count = len(tasks)
+            rec.task_count = len(tasks)+len(task3)
     
     @api.onchange('eqip_task')
     def _compute_stock_eq_count(self):
