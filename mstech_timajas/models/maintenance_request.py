@@ -61,11 +61,12 @@ class MaintenanceEquipment2(models.Model):
         equipment = super().write(vals)
         for record in self:
             if record.serial_no and not record.mant_lote:
-                record.mant_lote = self.env['stock.production.lot'].create({
-                    'name': record.serial_no,
-                    'company_id' : record.company_id.id,
-                    'product_id' : record.eqip_product.id,
-                })
+                if record.eqip_product.id:
+                    record.mant_lote = self.env['stock.production.lot'].create({
+                        'name': record.serial_no,
+                        'company_id' : record.company_id.id,
+                        'product_id' : record.eqip_product.id,
+                    })
             else:
                 record.mant_lote = False
         return equipment
