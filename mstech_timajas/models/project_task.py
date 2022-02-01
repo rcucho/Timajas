@@ -6,19 +6,36 @@ class ProjectTaskTimajas(models.Model):
     _inherit = "project.task"
     
     create_function = fields.Char(related='create_uid.function', readonly=True)
-    state_payment_invoice = fields.Selection(related='sale_order_id.invoice_ids.payment_state',string="Invoice Payment Status" ,readonly=True)  
+    state_payment_invoice = fields.Selection(related='sale_order_id.invoice_ids.payment_state',string="Estado de Pago Factura" ,readonly=True)  
     #--------------------------------------------------------------------------------------------------------------------------------
-    task_picking = fields.One2many('stock.picking','picking_task', string="Tools")
-    om_mrp = fields.One2many('mrp.production','om_project',string="Manufacturing Order")
-    proj_mant = fields.One2many('maintenance.request','mant_project',string="Maintenance Request")
+    task_picking = fields.One2many('stock.picking','picking_task', string="Herram.")
+    om_mrp = fields.One2many('mrp.production','om_project',string="Ordenn de Manufactura")
+    proj_mant = fields.One2many('maintenance.request','mant_project',string="Peticion de Mantenimiento")
     #--------------------------------------------------------------------------------------------------------------------------------
-    task_eqip = fields.Many2one('maintenance.equipment', string="Task in Equiment", compute='_compute_task_eqip')
+    task_eqip = fields.Many2one('maintenance.equipment', string="Tarea en equipos", compute='_compute_task_eqip')
     #--------------------------------------------------------------------------------------------------------------------------------
     @api.onchange('proj_mant')
     def _compute_task_eqip(self):
         for rec in self:
             rec.task_eqip = rec.proj_mant.equipment_id
-    
+    #================================================================================================================================
+    @api.onchange('om_mrp', 'sale_order_id')
+    def onchange_origin_location(self):
+        for record in self:
+            sale_order = record.sale_order_id
+            manufacture = record.om_mrp
+            if manufacture.state == 'done':
+                sale_order_line = {
+                    'order_id': sale_order.id,
+                    'product_id': manufacture.product_id.id,
+                    'price_unit': manufacture.product_id.list_price,
+                    'product_uom_qty': manufacture.product_qty,
+                    'tax_id': manufacture.product_id.taxes_id,
+                    'is_downpayment': False,
+                    'discount': 0.0,
+                }
+                self.env['sale.order.line'].create(sale_order_line)
+    #================================================================================================================================
 class MrpProducction(models.Model):
     _inherit = "mrp.production"
     om_project = fields.Many2one('project.task', string="OM en Proyecto")
@@ -28,12 +45,12 @@ class MrpProducction(models.Model):
         for record in self:
             if record.om_project:
                 record.origin = record.om_project.name#+ " / " + record.om_project.sale_order_id.name
-                #record.location_src_id = (20, 'EW/Stock') # Se tendria que crear los almacenes EW/Stock
+                #record.location_src_id = (20, 'EW/Stock')
                 #record.location_dest_id = (20, 'EW/Stock')
     
 class StockPickingTask(models.Model):
     _inherit = 'stock.picking'   
-    picking_task = fields.Many2one('project.task', string="Task in Stock")
+    picking_task = fields.Many2one('project.task', string="tarea en movimiento")
     
     @api.model
     def create(self, vals):
