@@ -51,7 +51,7 @@ class MaintenanceEquipment2(models.Model):
     
     def write(self, vals):
         equipment = super().write(vals)
-        for record in equipment:
+        for record in self:
             if record.serial_no and not record.mant_lote:
                 record.mant_lote = self.env['stock.production.lot'].create({
                     'name': record.serial_no,
