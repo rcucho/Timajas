@@ -59,7 +59,7 @@ class MaintenanceEquipment2(models.Model):
                     'product_id' : record.eqip_product.id,
                 })
         return equipment
-
+    #--------------------------------------------------------------------------------------------------------------------
     @api.onchange('maintenance_ids')
     def _compute_eqip_task(self):
         for rec in self:
@@ -112,6 +112,12 @@ class MaintenanceEquipment2(models.Model):
         action = self.env["ir.actions.actions"]._for_xml_id("stock.stock_move_action")
         action['views'] = [(self.env.ref('stock.view_picking_move_tree').id, 'tree'),]
         action['context'] = self.env.context#<----
+        action['domain'] = [('picking_id', 'in', self.eqip_task.task_picking.ids)]
+        return action
+
+    def action_view_stock_move_lines2(self):
+        self.ensure_one()
+        action = self.env["ir.actions.actions"]._for_xml_id("stock.stock_move_line_action")
         action['domain'] = [('picking_id', 'in', self.eqip_task.task_picking.ids)]
         return action
     #===================================================================================== 
