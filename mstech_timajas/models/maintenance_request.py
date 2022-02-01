@@ -73,8 +73,8 @@ class MaintenanceEquipment2(models.Model):
                     'product_id' : rec.eqip_product.id,
                 })
                 rec.mant_lote = lote.id
-            else:
-                rec.mant_lote = False
+            #else:
+                #rec.mant_lote = False
     #------------------------------------------------------------------------------------------
     def action_view_task3(self):
         self.ensure_one()
