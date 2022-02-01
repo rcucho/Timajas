@@ -18,7 +18,14 @@ class ProjectTaskTimajas(models.Model):
     def _compute_task_eqip(self):
         for rec in self:
             rec.task_eqip = rec.proj_mant.equipment_id
-    
+    #================================================================================================================================
+    #@api.onchange('om_mrp', 'sale_order_id')
+    #def onchange_origin_location(self):
+        #for record in self:
+            #if om_mrp.state == 'done':
+                #sale_order = record.sale_order_id
+                #create 
+    #================================================================================================================================
 class MrpProducction(models.Model):
     _inherit = "mrp.production"
     om_project = fields.Many2one('project.task', string="OM en Proyecto")
