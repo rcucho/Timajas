@@ -16,7 +16,6 @@ class MaintenanceRequestTimajas(models.Model):
                     'name': record.name,
                     'user_ids' : record.user_id,
                     'project_id' : 3,
-                    #'is_fsm' : False,
                 })
 
 class MaintenanceEquipment2(models.Model):
@@ -33,7 +32,6 @@ class MaintenanceEquipment2(models.Model):
     #-------------------------------------------------------------------------------------------------------------------
     @api.model
     def create(self, vals):
-        #equipment = super(MaintenanceEquipment2, self).create(vals)
         equipment = super().create(vals)
         for record in equipment:
             record.eqip_product = self.env['product.product'].create({
