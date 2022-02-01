@@ -69,13 +69,13 @@ class MaintenanceEquipment2(models.Model):
         self.ensure_one()
         for rec in self:
             #if rec.eqip_product:            
-            #if rec.serial_no and not rec.mant_lote:
-            lote = self.env['stock.production.lot'].create({
-                'name': rec.serial_no,
-                'company_id' : rec.company_id.id,
-                'product_id' : rec.eqip_product.id,
-            })
-            rec.mant_lote = lote.id
+            if rec.serial_no and (mant_lote == False):
+                lote = self.env['stock.production.lot'].create({
+                    'name': rec.serial_no,
+                    'company_id' : rec.company_id.id,
+                    'product_id' : rec.eqip_product.id,
+                })
+                rec.mant_lote = lote.id
             #else:
                 #rec.mant_lote = False
     #------------------------------------------------------------------------------------------
