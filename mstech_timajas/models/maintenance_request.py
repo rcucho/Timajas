@@ -33,10 +33,11 @@ class MaintenanceEquipment2(models.Model):
     @api.model
     def create(self, vals):
         equipment = super().create(vals)
-        list_name = self.env['product.product'].search([]).mapped('name').lower()
+        list_name = self.env['product.product'].search([]).mapped('name')
+        list_name1 = list_name.lower()
         for record in equipment:
             lst_word = record.name.split(' ').lower()
-            if lst_word[0] in list_name:
+            if lst_word[0] in list_name1:
                 record.eqip_product = self.env['product.product'].search([('name','=',lst_word[0])])
             else:
                 record.eqip_product = self.env['product.product'].create({
