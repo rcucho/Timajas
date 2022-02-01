@@ -65,8 +65,6 @@ class MaintenanceEquipment2(models.Model):
                         'company_id' : record.company_id.id,
                         'product_id' : record.eqip_product.id,
                     })
-            else:
-                record.mant_lote = False
         return equipment
     #--------------------------------------------------------------------------------------------------------------------
     @api.onchange('maintenance_ids')
