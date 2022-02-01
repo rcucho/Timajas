@@ -74,7 +74,7 @@ class MaintenanceEquipment2(models.Model):
             #
             tasks = rec.maintenance_ids.mant_project
             rec.eqip_task = tasks
-            rec.task_count = len(tasks3)
+            rec.task_count = len(task3)
     
     @api.onchange('eqip_task')
     def _compute_stock_eq_count(self):
