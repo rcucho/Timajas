@@ -22,9 +22,9 @@ class ProjectTaskTimajas(models.Model):
     @api.onchange('om_mrp', 'sale_order_id')
     def onchange_origin_location(self):
         for record in self:
-            if om_mrp.state == 'done':
-                sale_order = record.sale_order_id
-                manufacture = record.om_mrp
+            sale_order = record.sale_order_id
+            manufacture = record.om_mrp
+            if manufacture.state == 'done':
                 sale_order_line = {
                     'order_id': sale_order.id,
                     'product_id': manufacture.product_id.id,
