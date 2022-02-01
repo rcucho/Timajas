@@ -21,16 +21,16 @@
 				    <attribute name="attrs">{'invisible': ['|', ('is_fsm','=',False), '|', ('allow_billable', '=', False), ('invoice_count', '=', 0)]}</attribute>
 				</xpath>
 				<xpath expr="//notebook" position="inside">
-					<page name="herramientas_transfe" string="Herramientas">
+					<page name="herramientas_transfe" string="Peticiones de Almacén">
 						<div class="text-center">
 							<div class="col h5">
-								<label for='task_picking' string="Movimiento Interno de Herramientas" style="font-weight:bold;"/>
+								<!--<label for='task_picking' string="Peticiones de Almacén" style="font-weight:bold;"/>-->
 								<field name="task_picking"/>
 							</div>
 						</div>
 					</page>
-					<page name="create_orden_manu" string="Orden de Manufactura">
-						<field name="om_mrp"/>
+					<page name="create_orden_manu" string="Orden de Manufactura" attrs="{'invisible': [('is_fsm','=',False)]}" >
+						<field name="om_mrp" attrs="{'invisible': [('is_fsm','=',False)]}" />
 					</page>
 				</xpath>
 			</data>
