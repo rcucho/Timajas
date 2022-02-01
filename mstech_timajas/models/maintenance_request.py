@@ -49,6 +49,17 @@ class MaintenanceEquipment2(models.Model):
                 })
         return equipment
     
+    def write(self, vals):
+        equipment = super().write(vals)
+        for rec in equipment:
+            if record.serial_no and not record.mant_lote:
+                record.mant_lote = self.env['stock.production.lot'].create({
+                    'name': record.serial_no,
+                    'company_id' : record.company_id.id,
+                    'product_id' : record.eqip_product.id,
+                })
+        return equipment
+
     @api.onchange('maintenance_ids')
     def _compute_eqip_task(self):
         for rec in self:
@@ -66,25 +77,7 @@ class MaintenanceEquipment2(models.Model):
                 move_pro = pick.move_ids_without_package
                 for m in move_pro:
                     qnt_mov = qnt_mov + m.quantity_done
-            rec.stock_eq_cont = qnt_mov
-    
-    '''@api.depends('serial_no')
-    def _compute_mant_lote(self):
-        for rec in self:           
-            #if rec.serial_no:
-            #if rec.serial_no and not rec.mant_lote :
-            if rec.serial_no:
-                if not rec.mant_lote:
-                    lote = self.env['stock.production.lot'].create({
-                        'name': rec.serial_no,
-                        'company_id' : rec.company_id.id,
-                        'product_id' : rec.eqip_product.id,
-                    })
-                    rec.mant_lote = lote.id
-                #else:
-                    #rec.mant_lote = rec.mant_lote[0]
-            #else:
-                #rec.mant_lote = False'''
+            rec.stock_eq_cont = qnt_mov 
     #------------------------------------------------------------------------------------------
     def action_view_task3(self):
         self.ensure_one()
