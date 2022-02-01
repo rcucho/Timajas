@@ -76,7 +76,7 @@ class MaintenanceEquipment2(models.Model):
                     })
                     rec.mant_lote = lote.id
                 else:
-                    rec.mant_lote = rec.mant_lote
+                    rec.mant_lote = rec.mant_lote[0]
             #else:
                 #rec.mant_lote = False
     #------------------------------------------------------------------------------------------
