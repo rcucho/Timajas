@@ -106,15 +106,7 @@ class MaintenanceEquipment2(models.Model):
                 action['res_id'] = self.eqip_task.id
         action.setdefault('context', {})
         return action
-    #=====================================================================================       
-    def action_picking_move_tree2(self):
-        self.ensure_one()
-        action = self.env["ir.actions.actions"]._for_xml_id("stock.stock_move_action")
-        action['views'] = [(self.env.ref('stock.view_picking_move_tree').id, 'tree'),]
-        action['context'] = self.env.context#<----
-        action['domain'] = [('picking_id', 'in', self.eqip_task.task_picking.ids)]
-        return action
-
+    #=====================================================================================
     def action_view_stock_move_lines2(self):
         self.ensure_one()
         action = self.env["ir.actions.actions"]._for_xml_id("stock.stock_move_line_action")
