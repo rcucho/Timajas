@@ -4,7 +4,7 @@
 
         <record id="project_project_maintenance" model="project.project">
             <field name="name">Maintenance</field>
-            <field name="is_fsm" eval="1"/>
+            <field name="is_fsm" eval="0"/>
         </record>
 
         <record id="project_purchase_inspection" model="project.task.type">
