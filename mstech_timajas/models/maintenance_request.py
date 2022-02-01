@@ -37,7 +37,7 @@ class MaintenanceEquipment2(models.Model):
         list_name1 = [x.lower() for x in list_name]
         for record in equipment:
             lst_word = record.name.split(' ')
-            lst_word1 = [x.lower() for x in list_word]
+            lst_word1 = [x.lower() for x in lst_word]
             if lst_word1[0] in list_name1:
                 record.eqip_product = self.env['product.product'].search([('name','=',lst_word1[0])])
             else:
