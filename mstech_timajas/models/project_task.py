@@ -19,12 +19,22 @@ class ProjectTaskTimajas(models.Model):
         for rec in self:
             rec.task_eqip = rec.proj_mant.equipment_id
     #================================================================================================================================
-    #@api.onchange('om_mrp', 'sale_order_id')
-    #def onchange_origin_location(self):
-        #for record in self:
-            #if om_mrp.state == 'done':
-                #sale_order = record.sale_order_id
-                #create 
+    @api.onchange('om_mrp', 'sale_order_id')
+    def onchange_origin_location(self):
+        for record in self:
+            if om_mrp.state == 'done':
+                sale_order = record.sale_order_id
+                manufacture = record.om_mrp
+                sale_order_line = {
+                    'order_id': sale_order.id,
+                    'product_id': manufacture.product_id.id,
+                    'price_unit': manufacture.product_id.list_price,
+                    'product_uom_qty': manufacture.product_qty,
+                    'tax_id': manufacture.product_id.tax_id,
+                    'is_downpayment': False,
+                    'discount': 0.0,
+                }
+                self.env['sale.order.line'].create(sale_order_line)
     #================================================================================================================================
 class MrpProducction(models.Model):
     _inherit = "mrp.production"
