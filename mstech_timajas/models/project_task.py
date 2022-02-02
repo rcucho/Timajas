@@ -31,7 +31,7 @@ class ProjectTaskTimajas(models.Model):
                         'product_id': manufacture.product_id.id,
                         'price_unit': manufacture.product_id.list_price,
                         'product_uom_qty': manufacture.product_qty,
-                        'qty_delivered' : manufacture.product_qty,
+                        #'qty_delivered' : manufacture.product_qty,
                         'tax_id': manufacture.product_id.taxes_id,
                         'is_downpayment': False,
                         'discount': 0.0,
