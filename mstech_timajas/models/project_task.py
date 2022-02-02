@@ -18,6 +18,15 @@ class ProjectTaskTimajas(models.Model):
     def _compute_task_eqip(self):
         for rec in self:
             rec.task_eqip = rec.proj_mant.equipment_id
+
+    @api.depends('sale_order_id.procurement_group_id.stock_move_ids.created_production_id.procurement_group_id.mrp_production_ids')
+	def obtener_manufacture_sale_order(self):
+		for record in self:
+            if record.sale_order_id:
+                dic = record.sale_order_id.action_view_mrp_production()
+                x_id = dic.get('res_id',dic.get('domain',[(False,False,False)])[0][2])
+                if x_id:
+                    self.env['mrp.production'].browse(x_id).write({'om_project' : record.id})
     #================================================================================================================================
     @api.onchange('om_mrp', 'sale_order_id')
     def onchange_origin_location(self):
