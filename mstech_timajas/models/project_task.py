@@ -18,7 +18,7 @@ class ProjectTaskTimajas(models.Model):
     def _compute_task_eqip(self):
         for rec in self:
             rec.task_eqip = rec.proj_mant.equipment_id
-
+	#-------------------------------------------------------------------------------------------------------------------------------
 	@api.depends('sale_order_id.procurement_group_id.stock_move_ids.created_production_id.procurement_group_id.mrp_production_ids')
 	def obtener_manufacture_sale_order(self):
 		for record in self:
