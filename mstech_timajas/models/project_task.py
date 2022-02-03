@@ -53,7 +53,7 @@ class ProjectTaskTimajas(models.Model):
 class MrpProducction(models.Model):
     _inherit = "mrp.production"
     om_project = fields.Many2one('project.task', string="OM en Proyecto")
-    
+    #---------------------------------------------------------------------------------------------------------------------------------    
     @api.onchange('om_project', 'product_id')
     def onchange_origin_location(self):
         for record in self:
@@ -61,7 +61,20 @@ class MrpProducction(models.Model):
                 record.origin = record.om_project.name#+ " / " + record.om_project.sale_order_id.name
                 #record.location_src_id = (20, 'EW/Stock')
                 #record.location_dest_id = (20, 'EW/Stock')
-    
+    #---------------------------------------------------------------------------------------------------------------------------------
+    @api.model
+    def create(self, values):
+        res = super().create(values)
+        for record in self:
+            sales_info = res.action_view_sale_orders()
+            sale_info_id = dic.get('res_id',dic.get('domain',[(False,False,False)])[0][2])
+            if sale_info_id:
+                sale_ids = self.env ['sale.order'].browse(sale_info_id)
+                task_ids = sale_ids.tasks_ids
+                if task_ids:
+                    record.write({'om_project' : task_ids[0].id})
+        return res
+    #---------------------------------------------------------------------------------------------------------------------------------
 class StockPickingTask(models.Model):
     _inherit = 'stock.picking'   
     picking_task = fields.Many2one('project.task', string="tarea en movimiento")
