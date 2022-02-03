@@ -7,18 +7,18 @@ class ProjectTaskTimajas(models.Model):
     
     create_function = fields.Char(related='create_uid.function', readonly=True)
     state_payment_invoice = fields.Selection(related='sale_order_id.invoice_ids.payment_state',string="Estado de Pago Factura" ,readonly=True)  
-    #--------------------------------------------------------------------------------------------------------------------------------
+    #------------------------------------------------------------------------------------------------------------------------------------------
     task_picking = fields.One2many('stock.picking','picking_task', string="Herram.")
     om_mrp = fields.One2many('mrp.production','om_project',string="Ordenn de Manufactura")
     proj_mant = fields.One2many('maintenance.request','mant_project',string="Peticion de Mantenimiento")
-    #--------------------------------------------------------------------------------------------------------------------------------
+    #------------------------------------------------------------------------------------------------------------------------------------------
     task_eqip = fields.Many2one('maintenance.equipment', string="Tarea en equipos", compute='_compute_task_eqip')
-    #--------------------------------------------------------------------------------------------------------------------------------
+    #------------------------------------------------------------------------------------------------------------------------------------------
     @api.onchange('proj_mant')
     def _compute_task_eqip(self):
         for rec in self:
             rec.task_eqip = rec.proj_mant.equipment_id
-	#-------------------------------------------------------------------------------------------------------------------------------
+    #------------------------------------------------------------------------------------------------------------------------------------------
     @api.depends('sale_line_id.order_id.procurement_group_id.stock_move_ids.created_production_id.procurement_group_id.mrp_production_ids')
     def obtener_manufacture_sale_order(self):
         for record in self:
@@ -27,7 +27,9 @@ class ProjectTaskTimajas(models.Model):
                 x_id = dic.get('res_id',dic.get('domain',[(False,False,False)])[0][2])
                 if x_id:
                     self.env['mrp.production'].browse(x_id).write({'om_project' : record.id})
-    #================================================================================================================================
+		else:
+		    raise UserError("no hay")			
+    #==========================================================================================================================================
     @api.onchange('om_mrp', 'sale_order_id')
     def onchange_origin_location(self):
         for record in self:
