@@ -20,7 +20,7 @@ class ProjectTaskTimajas(models.Model):
             rec.task_eqip = rec.proj_mant.equipment_id
     #------------------------------------------------------------------------------------------------------------------------------------------
     #@api.depends('sale_line_id.order_id.procurement_group_id.stock_move_ids.created_production_id.procurement_group_id.mrp_production_ids')
-    @api.onchange('om_mrp')
+    '''@api.onchange('om_mrp')
     def obtener_manufacture_sale_order(self):
         for record in self:
             if record.sale_line_id.order_id:
@@ -29,7 +29,7 @@ class ProjectTaskTimajas(models.Model):
                 if x_id:
                     self.env['mrp.production'].browse(x_id).write({'om_project' : record.id})
                 if not record.om_mrp:
-                    raise UserError("str(x_id['res_id'])")			
+                    raise UserError("str(x_id['res_id'])")'''			
     #==========================================================================================================================================
     @api.onchange('om_mrp', 'sale_order_id')
     def onchange_origin_location(self):
