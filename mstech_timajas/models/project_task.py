@@ -29,7 +29,7 @@ class ProjectTaskTimajas(models.Model):
                 if x_id:
                     self.env['mrp.production'].browse(x_id).write({'om_project' : record.id})
                 if not record.om_mrp:
-                    raise UserError("str(x_id)")			
+                    raise UserError("str(x_id['res_id'])")			
     #==========================================================================================================================================
     @api.onchange('om_mrp', 'sale_order_id')
     def onchange_origin_location(self):
