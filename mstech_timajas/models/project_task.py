@@ -68,12 +68,14 @@ class MrpProducction(models.Model):
         for record in self:
             sales_info = res.action_view_sale_orders()
             sale_info_id = dic.get('res_id',dic.get('domain',[(False,False,False)])[0][2])
+            task_ids = False
             if sale_info_id:
                 sale_ids = self.env ['sale.order'].browse(sale_info_id)
                 task_ids = sale_ids.tasks_ids
                 if task_ids:
                     #record.write({'om_project' : task_ids[0].id})
                     task_ids[0].write({'om_mrp' : [(4, record.id, 0)] })
+            raise UserError(str(sale_info_id) + str(task_ids))
         return res
     #---------------------------------------------------------------------------------------------------------------------------------
 class StockPickingTask(models.Model):
