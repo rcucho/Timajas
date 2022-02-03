@@ -72,7 +72,8 @@ class MrpProducction(models.Model):
                 sale_ids = self.env ['sale.order'].browse(sale_info_id)
                 task_ids = sale_ids.tasks_ids
                 if task_ids:
-                    record.write({'om_project' : task_ids[0].id})
+                    #record.write({'om_project' : task_ids[0].id})
+                    task_ids[0].write({'om_mrp' : [(4, record.id, 0)] })
         return res
     #---------------------------------------------------------------------------------------------------------------------------------
 class StockPickingTask(models.Model):
