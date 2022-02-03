@@ -28,7 +28,7 @@ class ProjectTaskTimajas(models.Model):
                 x_id = dic.get('res_id',dic.get('domain',[(False,False,False)])[0][2])
                 if x_id:
                     self.env['mrp.production'].browse(x_id).write({'om_project' : record.id})
-                if not om_mrp:
+                if not record.om_mrp:
                     raise UserError("str(x_id)")			
     #==========================================================================================================================================
     @api.onchange('om_mrp', 'sale_order_id')
