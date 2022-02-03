@@ -27,8 +27,8 @@ class ProjectTaskTimajas(models.Model):
                 x_id = dic.get('res_id',dic.get('domain',[(False,False,False)])[0][2])
                 if x_id:
                     self.env['mrp.production'].browse(x_id).write({'om_project' : record.id})
-		else:
-		    raise UserError("no hay")			
+                else:
+                    raise UserError("no hay")			
     #==========================================================================================================================================
     @api.onchange('om_mrp', 'sale_order_id')
     def onchange_origin_location(self):
