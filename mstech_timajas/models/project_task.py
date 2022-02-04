@@ -48,6 +48,12 @@ class ProjectTaskTimajas(models.Model):
                     }
                     self.env['sale.order.line'].create(sale_order_line)
     #================================================================================================================================
+    #@api.model_create_multi
+    #def create(self,values):
+        #res = super().create(values)
+        #for record in res:
+            #sales_info 
+    #================================================================================================================================
 class MrpProducction(models.Model):
     _inherit = "mrp.production"
     om_project = fields.Many2one('project.task', string="OM en Proyecto")
