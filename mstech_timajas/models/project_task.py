@@ -34,11 +34,13 @@ class ProjectTaskTimajas(models.Model):
     def onchange_origin_location(self):
         self.ensure_one()
         for record in self:
-            manufacture_ids = record.om_mrp
+            manufacture = record.om_mrp
+            #manufacture_ids = record.om_mrp
             if record.sale_order_id:
                 sale_order = record.sale_order_id
                 #if manufacture[0]
-                for manufacture in manufacture_ids:
+                #for manufacture in manufacture_ids:
+                if manufacture.sale_order_count == 0:
                     if manufacture.state == 'done':
                         sale_order_line = {
                             'order_id': sale_order.id,
