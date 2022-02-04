@@ -57,7 +57,8 @@ class ProjectTaskTimajas(models.Model):
                 mrp_ids = mrp_info.get('res_id',mrp_info.get('domain',[(False,False,False)])[0][2])
                 if mrp_ids:
                     self.env['mrp.production'].browse(mrp_ids).write({'om_project' : record.id})
-            raise UserError(str(mrp_info) + str(mrp_ids))
+                else:
+                    raise UserError(str(mrp_info) + str(mrp_ids))
         return res
     #==============================================HOY==================================================================================
 class MrpProducction(models.Model):
@@ -72,7 +73,7 @@ class MrpProducction(models.Model):
                 #record.location_src_id = (20, 'EW/Stock')
                 #record.location_dest_id = (20, 'EW/Stock')
     #---------------------------------------------------------------------------------------------------------------------------------
-    @api.model
+    '''@api.model
     def create(self, values):
         res = super().create(values)
         for record in res:
@@ -86,7 +87,7 @@ class MrpProducction(models.Model):
                     #record.write({'om_project' : task_ids[0].id})
                     task_ids[0].write({'om_mrp' : [(4, record.id, 0)] })
             raise UserError(str(sale_info_id) + str(task_ids))
-        return res
+        return res'''
     #---------------------------------------------------------------------------------------------------------------------------------
 class StockPickingTask(models.Model):
     _inherit = 'stock.picking'   
