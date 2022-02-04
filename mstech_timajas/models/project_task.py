@@ -19,15 +19,15 @@ class ProjectTaskTimajas(models.Model):
         for rec in self:
             rec.task_eqip = rec.proj_mant.equipment_id
     #------------------------------------------------------------------------------------------------------------------------------------------
-    @api.depends('sale_line_id.order_id.procurement_group_id.stock_move_ids.created_production_id.procurement_group_id.mrp_production_ids')
-    def obtener_manufacture_sale_order(self):
-        for record in self:
-            if record.sale_line_id.order_id:
-                dic = record.sale_line_id.order_id.action_view_mrp_production()
-                x_id = dic.get('res_id',dic.get('domain',[(False,False,False)])[0][2])
-                if x_id:
-                    self.env['mrp.production'].browse(x_id).write({'om_project' : record.id})
-                raise UserError(str(x_id))
+    #@api.depends('sale_line_id.order_id.procurement_group_id.stock_move_ids.created_production_id.procurement_group_id.mrp_production_ids')
+    #def obtener_manufacture_sale_order(self):
+        #for record in self:
+            #if record.sale_line_id.order_id:
+                #dic = record.sale_line_id.order_id.action_view_mrp_production()
+                #x_id = dic.get('res_id',dic.get('domain',[(False,False,False)])[0][2])
+                #if x_id:
+                    #self.env['mrp.production'].browse(x_id).write({'om_project' : record.id})
+                #raise UserError(str(x_id))
     #==========================================================================================================================================
     @api.onchange('om_mrp', 'sale_order_id')
     def onchange_origin_location(self):
@@ -47,13 +47,19 @@ class ProjectTaskTimajas(models.Model):
                         'discount': 0.0,
                     }
                     self.env['sale.order.line'].create(sale_order_line)
-    #================================================================================================================================
-    #@api.model_create_multi
-    #def create(self,values):
-        #res = super().create(values)
-        #for record in res:
-            #sales_info 
-    #================================================================================================================================
+    #==============================================HOY==================================================================================
+    @api.model_create_multi
+    def create(self,values):
+        res = super().create(values)
+        for record in res:
+            if record.sale_line_id.order_id:
+                mrp_info = record.sale_line_id.order_id.action_view_mrp_production()
+                mrp_ids = mrp_info.get('res_id',mrp_info.get('domain',[(False,False,False)])[0][2])
+                if mrp_ids:
+                    self.env['mrp.production'].browse(mrp_ids).write({'om_project' : record.id})
+            raise UserError(str(mrp_info) + str(mrp_ids))
+        return res
+    #==============================================HOY==================================================================================
 class MrpProducction(models.Model):
     _inherit = "mrp.production"
     om_project = fields.Many2one('project.task', string="OM en Proyecto")
