@@ -9,6 +9,7 @@
         'industry_fsm',
         'industry_fsm_sale',
         'maintenance',
+        'mrp',
 
     ],
     'data': [
