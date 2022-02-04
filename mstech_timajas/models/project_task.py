@@ -32,22 +32,24 @@ class ProjectTaskTimajas(models.Model):
     @api.onchange('om_mrp', 'sale_order_id')
     def onchange_origin_location(self):
         for record in self:
-            manufacture = record.om_mrp
+            manufacture_ids = record.om_mrp
             if record.sale_order_id:
                 sale_order = record.sale_order_id
-                if manufacture.state == 'done':
-                    sale_order_line = {
-                        'order_id': sale_order.id,
-                        'product_id': manufacture.product_id.id,
-                        'price_unit': manufacture.product_id.list_price,
-                        'product_uom_qty': manufacture.product_qty,
-                        #'qty_delivered' : manufacture.product_qty,
-                        'tax_id': manufacture.product_id.taxes_id,
-                        'is_downpayment': False,
-                        'discount': 0.0,
-                    }
-                    self.env['sale.order.line'].create(sale_order_line)
-    #==============================================HOY==================================================================================
+                #if manufacture[0]
+                for manufacture in manufacture_ids:
+                    if manufacture.state == 'done':
+                        sale_order_line = {
+                            'order_id': sale_order.id,
+                            'product_id': manufacture.product_id.id,
+                            'price_unit': manufacture.product_id.list_price,
+                            'product_uom_qty': manufacture.product_qty,
+                            #'qty_delivered' : manufacture.product_qty,
+                            'tax_id': manufacture.product_id.taxes_id,
+                            'is_downpayment': False,
+                            'discount': 0.0,
+                        }
+                        self.env['sale.order.line'].create(sale_order_line)
+    #==============================================4/2/22===============================================================================
     @api.model_create_multi
     def create(self,values):
         res = super().create(values)
@@ -60,7 +62,7 @@ class ProjectTaskTimajas(models.Model):
                 else:
                     raise UserError(str(mrp_info) + str(mrp_ids))
         return res
-    #==============================================HOY==================================================================================
+    #==============================================4/2/22===============================================================================
 class MrpProducction(models.Model):
     _inherit = "mrp.production"
     om_project = fields.Many2one('project.task', string="OM en Proyecto")
