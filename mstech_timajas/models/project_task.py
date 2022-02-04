@@ -29,7 +29,8 @@ class ProjectTaskTimajas(models.Model):
                     #self.env['mrp.production'].browse(x_id).write({'om_project' : record.id})
                 #raise UserError(str(x_id))
     #==========================================================================================================================================
-    @api.onchange('om_mrp', 'sale_order_id')
+    #@api.onchange('om_mrp', 'sale_order_id')
+    @api.depends('om_mrp', 'sale_order_id')
     def onchange_origin_location(self):
         for record in self:
             manufacture_ids = record.om_mrp
