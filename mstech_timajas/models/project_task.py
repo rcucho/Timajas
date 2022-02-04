@@ -59,8 +59,8 @@ class ProjectTaskTimajas(models.Model):
                 mrp_ids = mrp_info.get('res_id',mrp_info.get('domain',[(False,False,False)])[0][2])
                 if mrp_ids:
                     self.env['mrp.production'].browse(mrp_ids).write({'om_project' : record.id})
-                else:
-                    raise UserError(str(mrp_info) + str(mrp_ids))
+                #else:
+                    #raise UserError(str(mrp_info) + str(mrp_ids))
         return res
     #==============================================4/2/22===============================================================================
 class MrpProducction(models.Model):
