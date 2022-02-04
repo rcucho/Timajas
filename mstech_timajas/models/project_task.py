@@ -63,7 +63,7 @@ class MrpProducction(models.Model):
     @api.model
     def create(self, values):
         res = super().create(values)
-        for record in self:
+        for record in res:
             sales_info = record.action_view_sale_orders()
             sale_info_id = sales_info.get('res_id',sales_info.get('domain',[(False,False,False)])[0][2])
             task_ids = False
